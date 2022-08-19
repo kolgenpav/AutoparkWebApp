@@ -8,9 +8,14 @@
 </head>
 <body>
 <section id="autopark">
-    <div th:insert="header :: header"></div>
-    <h2 th:text="${message}"></h2>
-    <div th:insert="footer :: footer"></div>
+    <div class="container">
+        <div th:insert="header :: header"></div>
+        <h2 th:text="${message}"></h2>
+        <a th:href="${servlet}">
+            <span th:text="${linkText}"></span>
+        </a>
+        <div th:insert="footer :: footer"></div>
+    </div>
 </section>
 </body>
 </html>

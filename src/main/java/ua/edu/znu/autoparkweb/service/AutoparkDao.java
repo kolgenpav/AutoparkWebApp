@@ -3,7 +3,7 @@ package ua.edu.znu.autoparkweb.service;
 import java.util.List;
 
 /**
- * Interface with methods that working with entities' instances of Autopark database..
+ * Interface with universal methods that working with entities' instances of Autopark database..
  */
 public interface AutoparkDao<T> {
 
@@ -13,7 +13,7 @@ public interface AutoparkDao<T> {
 
     List<T> findAll();
 
-    T create(final T entity);
+    void create(final T entity);
 
     T update(final T entity);
 

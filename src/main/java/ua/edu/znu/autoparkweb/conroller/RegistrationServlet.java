@@ -1,6 +1,5 @@
 package ua.edu.znu.autoparkweb.conroller;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,16 +10,17 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.IWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
+import ua.edu.znu.autoparkweb.model.User;
 import ua.edu.znu.autoparkweb.service.UserDaoImpl;
 
 import javax.persistence.NoResultException;
 import java.io.IOException;
 
 /**
- * Servlet that processes user login.
+ * Servlet that makes new user registration.
  */
-@WebServlet("/AuthServlet")
-public class AuthServlet extends HttpServlet {
+@WebServlet("/RegistrationServlet")
+public class RegistrationServlet extends HttpServlet {
 
     private TemplateEngine templateEngine;
 
@@ -36,7 +36,7 @@ public class AuthServlet extends HttpServlet {
                          HttpServletResponse response)
             throws IOException {
         WebContext context = getWebContext(request, response);
-        templateEngine.process("index", context, response.getWriter());
+        templateEngine.process("registration", context, response.getWriter());
         response.setContentType("text/html;charset=UTF-8");
     }
 
@@ -49,23 +49,21 @@ public class AuthServlet extends HttpServlet {
         String password = request.getParameter("password");
         UserDaoImpl userDao = new UserDaoImpl();
         try {
-            if (userDao.isAuthenticated(username, password)) {
-//        if (isAuthenticated(username, password)) {
-                context.setVariable("message", "Hello " + username + "!");
-                context.setVariable("servlet", "index.html");
-                context.setVariable("linkText", "Index");
-            } else {
-                context.setVariable("message", "Authentication failed!");
-                context.setVariable("servlet", "RegistrationServlet");
-                context.setVariable("linkText", "Registration");
-
-            }
+            User foundedUser = userDao.findByUsername(username);
+            context.setVariable("message", "User with " + username + " already registered!");
+            context.setVariable("servlet", "RegistrationServlet");
+            context.setVariable("linkText", "Registration");
         } catch (NoResultException ex) {
-            context.setVariable("message", "No such username!");
+            User newUser = new User();
+            newUser.setUsername(username);
+            newUser.setPassword(password);
+            userDao.create(newUser);
+            context.setVariable("message", "User " + username + " registered");
             context.setVariable("servlet", "index.html");
             context.setVariable("linkText", "Index");
-        }
+        } finally {
 
+        }
         templateEngine.process("home", context, response.getWriter());
         response.setContentType("text/html;charset=UTF-8");
     }
@@ -76,19 +74,8 @@ public class AuthServlet extends HttpServlet {
         return new WebContext(webExchange);
     }
 
-    /**
-     * Authenticates user.
-     *
-     * @param username username
-     * @param password password
-     * @return is user authenticated
-     */
-    private boolean isAuthenticated(String username, String password) {
-        return "foo".equalsIgnoreCase(username) && "bar".equalsIgnoreCase(password);
-    }
-
     @Override
     public String getServletInfo() {
-        return "Servlet that processes user login.";
+        return "Servlet that makes new user registration.";
     }
 }

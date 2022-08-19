@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <title>Registration</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/style.css" th:href="@{/css/style.css}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+</head>
+<body>
+<section id="autopark">
+    <div class="container">
+        <div th:insert="header :: header"></div>
+        <div class="content">
+            <div class="companyname">
+                <img src="../../images/userregistration.jpg" th:src="@{/images/userregistration.jpg}" alt="New user registration" width="600" height="350">
+            </div>
+            <div class="loginform">
+                <form action="RegistrationServlet" method="post">
+                    <p>Username: <input type="text" name="username"/></p>
+                    <p>Password: <input type="password" name="password"/></p>
+                    <p><input type="submit" value="Register" style="float: right"/></p>
+                </form>
+                <br/>
+                <a href="index.html" th:href="@{/index.html}">Index</a>
+            </div>
+        </div>
+        <div th:insert="footer :: footer"></div>
+    </div>
+</section>
+</body>
+</html>
