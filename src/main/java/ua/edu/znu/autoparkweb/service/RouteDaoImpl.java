@@ -1,7 +1,6 @@
 package ua.edu.znu.autoparkweb.service;
 
 import ua.edu.znu.autoparkweb.model.Bus;
-import ua.edu.znu.autoparkweb.model.Driver;
 import ua.edu.znu.autoparkweb.model.Route;
 
 import javax.persistence.Query;

@@ -1,6 +1,5 @@
 package ua.edu.znu.autoparkweb.conroller;
 
-import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

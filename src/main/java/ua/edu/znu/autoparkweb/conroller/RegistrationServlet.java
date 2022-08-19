@@ -61,8 +61,6 @@ public class RegistrationServlet extends HttpServlet {
             context.setVariable("message", "User " + username + " registered");
             context.setVariable("servlet", "index.html");
             context.setVariable("linkText", "Index");
-        } finally {
-
         }
         templateEngine.process("home", context, response.getWriter());
         response.setContentType("text/html;charset=UTF-8");

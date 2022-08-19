@@ -1,7 +1,6 @@
 package ua.edu.znu.autoparkweb.service;
 
 import ua.edu.znu.autoparkweb.model.User;
-
 import javax.persistence.Query;
 
 /**

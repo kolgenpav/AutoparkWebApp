@@ -13,13 +13,11 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 @WebListener
 public class ThymeleafConfiguration implements ServletContextListener {
     public static final String TEMPLATE_ENGINE_ATR = "ua.edu.znu.servletstudy.TemplateEngineInstance";
-    private ITemplateEngine templateEngine;
-    private JakartaServletWebApplication application;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        this.application = JakartaServletWebApplication.buildApplication(sce.getServletContext());
-        this.templateEngine = getTemplateEngine(this.application);
+        JakartaServletWebApplication application = JakartaServletWebApplication.buildApplication(sce.getServletContext());
+        ITemplateEngine templateEngine = getTemplateEngine(application);
         sce.getServletContext().setAttribute(TEMPLATE_ENGINE_ATR, templateEngine);
     }
 
@@ -35,7 +33,7 @@ public class ThymeleafConfiguration implements ServletContextListener {
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setPrefix("/WEB-INF/templates/");
         templateResolver.setSuffix(".html");
-        templateResolver.setCacheTTLMs(Long.valueOf(3600000L));
+        templateResolver.setCacheTTLMs(3600000L);
         templateResolver.setCacheable(true);
         return templateResolver;
     }
