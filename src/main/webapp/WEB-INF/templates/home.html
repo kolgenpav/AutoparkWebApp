@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/style.css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<section id="autopark">
+    <div th:insert="header :: header"></div>
+    <h2 th:text="${message}"></h2>
+    <div th:insert="footer :: footer"></div>
+</section>
+</body>
+</html>

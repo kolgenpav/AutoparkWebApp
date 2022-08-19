@@ -1,0 +1,42 @@
+#autopark {
+  font-family: 'Roboto', sans-serif;
+  color: #0b1e60;	
+}
+
+#autopark h1 {
+  margin: 0;
+}
+
+header {
+  display: flex;	
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2rem;
+  background-image: url('../images/buses-background.jpg');
+  height: 100px;
+  background-size: cover;
+}
+
+header ul {
+  display: flex;
+  list-style-type: none;
+}  
+
+header ul li {
+  margin-right: 1rem;
+  font-weight: 700;
+}
+
+.content {
+  display: flex;
+  margin-top: 5px;
+}
+
+.loginform {
+  margin: auto;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+}
