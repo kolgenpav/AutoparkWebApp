@@ -1,0 +1,21 @@
+# Start of .gitignore
+
+### Java ###
+# Compiled class file
+/target/*
+*.class
+
+# Packafe files #
+*.jar
+*.war
+*.ear
+
+# Virtual machine cruch logs #
+hs_err_pid*
+
+### IntelliJ IDEA files ###
+*iml
+.idea/*
+
+# End of .gitignore
+
