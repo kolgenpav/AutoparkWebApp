@@ -3,26 +3,30 @@ package ua.edu.znu.autoparkweb.service;
 import ua.edu.znu.autoparkweb.model.Bus;
 import ua.edu.znu.autoparkweb.model.Route;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class RouteDaoImpl extends AutoparkDaoImpl<Route> {
 
     public Route findByNumber(final String number) {
-        Query query = entityManager.createQuery("from Route r where r.number=:number")
+        TypedQuery<Route> query = entityManager.createQuery("from Route r where r.number=:number", Route.class)
                 .setParameter("number", number);
-        return (Route) query.getSingleResult();
+        return getSingleResult(query);
     }
 
     public List<Route> findByNamePattern(final String routeNamePattern) {
-        Query query = entityManager.createQuery("from Route r where r.name=:routeName")
+        TypedQuery<Route> query = entityManager
+                .createQuery("from Route r where r.name=:routeName", Route.class)
                 .setParameter("routeName", "%" + routeNamePattern + "%");
-        return (List<Route>) query.getResultList();
+        return getResultList(query);
     }
 
     public Route findByBus(final Bus bus) {
-        Query query = entityManager.createQuery("from Route r where :bus member of r.buses")
+        TypedQuery<Route> query = entityManager
+                .createQuery("from Route r where :bus member of r.buses", Route.class)
                 .setParameter("bus", bus);
-        return (Route) query.getSingleResult();
+        return getSingleResult(query);
     }
 }

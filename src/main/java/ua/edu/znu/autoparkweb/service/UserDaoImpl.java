@@ -1,7 +1,9 @@
 package ua.edu.znu.autoparkweb.service;
 
 import ua.edu.znu.autoparkweb.model.User;
-import javax.persistence.Query;
+
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 /**
  * Specific User methods.
@@ -9,9 +11,10 @@ import javax.persistence.Query;
 public class UserDaoImpl extends AutoparkDaoImpl<User> {
 
     public User findByUsername(final String username) {
-        Query query = entityManager.createQuery("from User u where u.username=:username")
+        TypedQuery<User> query = entityManager
+                .createQuery("from User u where u.username=:username", User.class)
                 .setParameter("username", username);
-        return (User) query.getSingleResult();
+        return getSingleResult(query);
     }
 
     public boolean isAuthenticated(final String username, final String password) {

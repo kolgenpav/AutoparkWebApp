@@ -1,8 +1,14 @@
 package ua.edu.znu.autoparkweb.service;
 
+import ua.edu.znu.autoparkweb.model.Bus;
+import ua.edu.znu.autoparkweb.model.User;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -25,7 +31,7 @@ public abstract class AutoparkDaoImpl<T> implements AutoparkDao<T> {
         this.clazz = clazzToSet;
     }
 
-    public T findOne(final long id) {
+    public T findById(final long id) {
         return entityManager.find(clazz, id);
     }
 
@@ -34,27 +40,76 @@ public abstract class AutoparkDaoImpl<T> implements AutoparkDao<T> {
         return entityManager.createQuery("from " + clazz.getName()).getResultList();
     }
 
-    public void create(final T entity) {
-        entityManager.getTransaction().begin();
-        entityManager.persist(entity);
-        entityManager.getTransaction().commit();
+    @Override
+    public T getSingleResult(TypedQuery<T> query) {
+        T entity = null;
+        try {
+            entity = query.getSingleResult();
+        } catch (NoResultException ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            entityManager.close();
+        }
+        return entity;
     }
 
-    public T update(final T entity) {
-        entityManager.getTransaction().begin();
-        T mergedEntity = entityManager.merge(entity);
-        entityManager.getTransaction().commit();
-        return mergedEntity;
+    @Override
+    public List<T> getResultList(TypedQuery<T> query) {
+        List<T> entityList = null;
+        try {
+            entityList = query.getResultList();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+        return entityList;
+    }
+
+    public void create(final T entity) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.persist(entity);
+            transaction.commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            transaction.rollback();
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    public void update(final T entity) {
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.merge(entity);
+            transaction.commit();
+        } catch (Exception ex){
+            ex.printStackTrace();
+            transaction.rollback();
+        }finally {
+            entityManager.close();
+        }
     }
 
     public void delete(final T entity) {
-        entityManager.getTransaction().begin();
-        entityManager.remove(entity);
-        entityManager.getTransaction().commit();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.remove(entity);
+            transaction.commit();
+        }catch (Exception ex){
+            ex.printStackTrace();
+            transaction.rollback();
+        }finally {
+            entityManager.close();
+        }
     }
 
     public void deleteById(final long entityId) {
-        final T entity = findOne(entityId);
+        final T entity = findById(entityId);
         delete(entity);
     }
 }

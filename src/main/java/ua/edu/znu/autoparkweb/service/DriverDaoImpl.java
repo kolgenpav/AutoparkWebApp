@@ -3,27 +3,30 @@ package ua.edu.znu.autoparkweb.service;
 import ua.edu.znu.autoparkweb.model.Bus;
 import ua.edu.znu.autoparkweb.model.Driver;
 
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class DriverDaoImpl extends AutoparkDaoImpl<Driver> {
 
     public List<Driver> findByNameAndSurname(final String name, final String surname) {
-        Query query = entityManager.createQuery("from Driver d where d.name=:name and d.surname=:surname")
+        TypedQuery<Driver> query = entityManager
+                .createQuery("from Driver d where d.name=:name and d.surname=:surname", Driver.class)
                 .setParameter("name", name)
                 .setParameter("surname", surname);
-        return (List<Driver>) query.getResultList();
+        return getResultList(query);
     }
 
     public List<Driver> findByAgeGreaterAndEqualThan(final int minimalAge) {
-        Query query = entityManager.createQuery("from Driver d where d.age >=:minimalAge")
+        TypedQuery<Driver> query = entityManager
+                .createQuery("from Driver d where d.age >=:minimalAge", Driver.class)
                 .setParameter("minimalAge", minimalAge);
-        return (List<Driver>) query.getResultList();
+        return getResultList(query);
     }
 
     public List<Driver> findByBus(final Bus bus) {
-        Query query = entityManager.createQuery("from Driver d where :bus member of d.buses")
+        TypedQuery<Driver> query = entityManager
+                .createQuery("from Driver d where :bus member of d.buses", Driver.class)
                 .setParameter("bus", bus);
-        return (List<Driver>) query.getResultList();
+        return getResultList(query);
     }
 }

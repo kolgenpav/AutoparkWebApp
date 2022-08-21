@@ -4,26 +4,23 @@ import ua.edu.znu.autoparkweb.model.Bus;
 import ua.edu.znu.autoparkweb.model.Driver;
 import ua.edu.znu.autoparkweb.model.Route;
 
-import javax.persistence.Query;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class BusDaoImpl extends AutoparkDaoImpl<Bus> {
 
     public Bus findByNumber(final String number) {
-        Query query = entityManager.createQuery("from Bus b where b.number=:number")
+        TypedQuery<Bus> query = entityManager
+                .createQuery("from Bus b where b.number=:number", Bus.class)
                 .setParameter("number", number);
-        return (Bus) query.getSingleResult();
+        return getSingleResult(query);
     }
 
     public List<Bus> findByRoute(final Route route) {
-        Query query = entityManager.createQuery("from Bus b where b.route=:route")
+        TypedQuery<Bus> query = entityManager
+                .createQuery("from Bus b where b.route=:route", Bus.class)
                 .setParameter("route", route);
-        return (List<Bus>) query.getResultList();
-    }
-
-    public List<Driver> findBusDrivers(final Driver driver) {
-        Query query = entityManager.createQuery("from Bus b where b.driver=:driver")
-                .setParameter("driver", driver);
-        return (List<Driver>) query.getResultList();
+        return getResultList(query);
     }
 }

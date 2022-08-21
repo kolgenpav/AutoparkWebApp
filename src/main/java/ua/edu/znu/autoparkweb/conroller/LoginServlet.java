@@ -18,8 +18,8 @@ import java.io.IOException;
 /**
  * Servlet that processes user login.
  */
-@WebServlet("/AuthServlet")
-public class AuthServlet extends HttpServlet {
+@WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet {
 
     private TemplateEngine templateEngine;
 
