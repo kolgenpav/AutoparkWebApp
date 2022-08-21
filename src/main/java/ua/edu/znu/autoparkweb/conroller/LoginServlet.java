@@ -47,23 +47,20 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         UserDaoImpl userDao = new UserDaoImpl();
+        String messageText;
         try {
             if (userDao.isAuthenticated(username, password)) {
 //        if (isAuthenticated(username, password)) {
-                context.setVariable("message", "Hello " + username + "!");
-                context.setVariable("servlet", "index.html");
-                context.setVariable("linkText", "Index");
+                messageText = "Hello " + username + "!";
             } else {
-                context.setVariable("message", "Authentication failed!");
-                context.setVariable("servlet", "RegistrationServlet");
-                context.setVariable("linkText", "Registration");
-
+                messageText = "Authentication failed!";
             }
         } catch (NoResultException ex) {
-            context.setVariable("message", "No such username!");
-            context.setVariable("servlet", "index.html");
-            context.setVariable("linkText", "Index");
+            messageText = "No such username!";
         }
+        context.setVariable("message", messageText);
+        context.setVariable("servlet", "index.html");
+        context.setVariable("linkText", "Index");
 
         templateEngine.process("home", context, response.getWriter());
         response.setContentType("text/html;charset=UTF-8");

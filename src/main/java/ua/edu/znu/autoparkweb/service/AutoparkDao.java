@@ -1,7 +1,5 @@
 package ua.edu.znu.autoparkweb.service;
 
-import ua.edu.znu.autoparkweb.model.User;
-
 import javax.persistence.TypedQuery;
 import java.util.List;
 

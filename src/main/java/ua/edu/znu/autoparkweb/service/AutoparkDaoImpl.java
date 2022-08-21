@@ -1,8 +1,5 @@
 package ua.edu.znu.autoparkweb.service;
 
-import ua.edu.znu.autoparkweb.model.Bus;
-import ua.edu.znu.autoparkweb.model.User;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
