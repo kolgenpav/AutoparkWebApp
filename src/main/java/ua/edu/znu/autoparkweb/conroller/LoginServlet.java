@@ -30,40 +30,46 @@ public class LoginServlet extends HttpServlet {
                 .getAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATR);
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
-            throws IOException {
-        WebContext context = getWebContext(request, response);
-        templateEngine.process("index", context, response.getWriter());
-        response.setContentType("text/html;charset=UTF-8");
-    }
+//    @Override
+//    protected void doGet(HttpServletRequest request,
+//                         HttpServletResponse response)
+//            throws IOException {
+//        doPost(request, response);
+//    }
 
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws IOException {
         WebContext context = getWebContext(request, response);
+        response.setContentType("text/html;charset=UTF-8");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String action = request.getParameter("action");
         UserDaoImpl userDao = new UserDaoImpl();
         String messageText;
-        try {
-            if (userDao.isAuthenticated(username, password)) {
+        String nextUrl;
+        if (action.equals("logout")) {
+//            session.invalidate();
+            nextUrl = "login";
+        } else {
+            try {
+                if (userDao.isAuthenticated(username, password)) {
 //        if (isAuthenticated(username, password)) {
-                messageText = "Hello " + username + "!";
-            } else {
-                messageText = "Authentication failed!";
+                    messageText = "Hello " + username + "!";
+                    nextUrl = "home";
+                } else {
+                    messageText = "Authentication failed!";
+                    nextUrl = "login";
+                }
+            } catch (NoResultException ex) {
+                messageText = "No such username!";
+                nextUrl = "login";
             }
-        } catch (NoResultException ex) {
-            messageText = "No such username!";
+            context.setVariable("message", messageText);
         }
-        context.setVariable("message", messageText);
-        context.setVariable("servlet", "index.html");
-        context.setVariable("linkText", "Index");
 
-        templateEngine.process("home", context, response.getWriter());
-        response.setContentType("text/html;charset=UTF-8");
+        templateEngine.process(nextUrl, context, response.getWriter());
     }
 
     private WebContext getWebContext(HttpServletRequest request, HttpServletResponse response) {
