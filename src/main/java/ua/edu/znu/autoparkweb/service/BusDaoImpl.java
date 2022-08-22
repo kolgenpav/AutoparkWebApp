@@ -8,6 +8,10 @@ import java.util.List;
 
 public class BusDaoImpl extends AutoparkDaoImpl<Bus> {
 
+    public BusDaoImpl() {
+        setClazz(Bus.class);
+    }
+
     public Bus findByNumber(final String number) {
         TypedQuery<Bus> query = entityManager
                 .createQuery("from Bus b where b.number=:number", Bus.class)

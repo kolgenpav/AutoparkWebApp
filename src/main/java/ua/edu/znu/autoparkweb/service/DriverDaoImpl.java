@@ -8,6 +8,10 @@ import java.util.List;
 
 public class DriverDaoImpl extends AutoparkDaoImpl<Driver> {
 
+    public DriverDaoImpl() {
+        setClazz(Driver.class);
+    }
+
     public List<Driver> findByNameAndSurname(final String name, final String surname) {
         TypedQuery<Driver> query = entityManager
                 .createQuery("from Driver d where d.name=:name and d.surname=:surname", Driver.class)

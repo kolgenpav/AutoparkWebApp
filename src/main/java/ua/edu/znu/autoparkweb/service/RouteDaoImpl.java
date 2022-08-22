@@ -8,6 +8,10 @@ import java.util.List;
 
 public class RouteDaoImpl extends AutoparkDaoImpl<Route> {
 
+    public RouteDaoImpl() {
+        setClazz(Route.class);
+    }
+
     public Route findByNumber(final String number) {
         TypedQuery<Route> query = entityManager.createQuery("from Route r where r.number=:number", Route.class)
                 .setParameter("number", number);

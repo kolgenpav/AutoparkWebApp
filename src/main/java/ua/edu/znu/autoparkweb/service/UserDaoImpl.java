@@ -10,6 +10,10 @@ import javax.persistence.TypedQuery;
  */
 public class UserDaoImpl extends AutoparkDaoImpl<User> {
 
+    public UserDaoImpl() {
+        setClazz(User.class);
+    }
+
     public User findByUsername(final String username) {
         TypedQuery<User> query = entityManager
                 .createQuery("from User u where u.username=:username", User.class)
