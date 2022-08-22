@@ -30,12 +30,12 @@ public class LoginServlet extends HttpServlet {
                 .getAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATR);
     }
 
-//    @Override
-//    protected void doGet(HttpServletRequest request,
-//                         HttpServletResponse response)
-//            throws IOException {
-//        doPost(request, response);
-//    }
+    @Override
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response)
+            throws IOException {
+        doPost(request, response);
+    }
 
     @Override
     protected void doPost(HttpServletRequest request,
@@ -58,6 +58,8 @@ public class LoginServlet extends HttpServlet {
 //        if (isAuthenticated(username, password)) {
                     messageText = "Hello " + username + "!";
                     nextUrl = "home";
+                    request.setAttribute("message", messageText);
+                    request.getRequestDispatcher("HomeServlet").forward(request, response);
                 } else {
                     messageText = "Authentication failed!";
                     nextUrl = "login";
@@ -65,10 +67,11 @@ public class LoginServlet extends HttpServlet {
             } catch (NoResultException ex) {
                 messageText = "No such username!";
                 nextUrl = "login";
+            } catch (ServletException e) {
+                throw new RuntimeException(e);
             }
             context.setVariable("message", messageText);
         }
-
         templateEngine.process(nextUrl, context, response.getWriter());
     }
 
