@@ -1,6 +1,7 @@
 package ua.edu.znu.autoparkweb.model;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,6 +25,7 @@ public class Route {
     private String name;
     @Column(name = "number", nullable = false, unique = true)
     private int number;
+    @ToString.Exclude
     @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Bus> buses = new LinkedHashSet<>();
 }

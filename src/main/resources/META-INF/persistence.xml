@@ -28,7 +28,7 @@
             <property name="javax.persistence.schema-generation.scripts.create-target"
                       value="c:/Users/kgp/Dropbox/EDU/КТ/AutoparkWebApp/src/main/resources/META-INF/sampleCreate.ddl"/>
             <property name="javax.persistence.schema-generation.scripts.drop-target"
-                      value="c:/Users/kgp/Dropbox/EDU/КТ/AutoparkWebApp/src/main/resources/META-INF/sampleDrop.ddl"/>   -->
+                      value="c:/Users/kgp/Dropbox/EDU/КТ/AutoparkWebApp/src/main/resources/META-INF/sampleDrop.ddl"/>  -->
 
         </properties>
     </persistence-unit>

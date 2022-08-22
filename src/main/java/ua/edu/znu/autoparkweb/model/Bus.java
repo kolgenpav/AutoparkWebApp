@@ -1,6 +1,8 @@
 package ua.edu.znu.autoparkweb.model;
 
 import lombok.Data;
+import lombok.ToString;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,8 +26,9 @@ public class Bus {
     private Long id;
     @Column(name = "number", nullable = false, unique = true, length = 10)
     private String number;
+    @ToString.Exclude
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "route_id", unique = true)
+    @JoinColumn(name = "route_id")
     private Route route;
     @ManyToMany(mappedBy = "buses", cascade = CascadeType.PERSIST)
     private Set<Driver> drivers = new LinkedHashSet<>();

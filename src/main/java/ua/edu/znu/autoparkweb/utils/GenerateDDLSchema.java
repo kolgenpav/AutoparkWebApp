@@ -1,5 +1,7 @@
 package ua.edu.znu.autoparkweb.utils;
 
+import ua.edu.znu.autoparkweb.service.DriverDaoImpl;
+
 import javax.persistence.Persistence;
 
 /**
@@ -11,6 +13,11 @@ public class GenerateDDLSchema {
         Persistence.generateSchema("autoparkPU", null);
         /*For root directory printing*/
         System.out.println(System.getProperty("user.dir"));
+
+        /*For Lombok's @String.Exclude checking*/
+        DriverDaoImpl driverDao = new DriverDaoImpl();
+        System.out.println(driverDao.findById(1L));
+
         System.exit(0);
     }
 }

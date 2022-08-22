@@ -1,6 +1,7 @@
 package ua.edu.znu.autoparkweb.model;
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -28,6 +29,8 @@ public class Driver {
     private String surname;
     @Column(name = "age", nullable = false)
     private int age;
+
+    @ToString.Exclude
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "drivers_buses",
             joinColumns = @JoinColumn(name = "driver_id"),
