@@ -10,8 +10,15 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.IWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
+import ua.edu.znu.autoparkweb.model.Bus;
+import ua.edu.znu.autoparkweb.model.Driver;
+import ua.edu.znu.autoparkweb.model.Route;
+import ua.edu.znu.autoparkweb.service.BusDaoImpl;
+import ua.edu.znu.autoparkweb.service.DriverDaoImpl;
+import ua.edu.znu.autoparkweb.service.RouteDaoImpl;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * The start point for the authenticated user.
@@ -39,24 +46,20 @@ public class HomeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws IOException {
+        String message = (String) request.getAttribute("message");
         WebContext context = getWebContext(request, response);
-//        String username = request.getParameter("username");
-//        String password = request.getParameter("password");
-//        UserDaoImpl userDao = new UserDaoImpl();
-//        try {
-//            User foundedUser = userDao.findByUsername(username);
-//            context.setVariable("message", "User with " + username + " already registered!");
-//            context.setVariable("servlet", "RegistrationServlet");
-//            context.setVariable("linkText", "Registration");
-//        } catch (NoResultException ex) {
-//            User newUser = new User();
-//            newUser.setUsername(username);
-//            newUser.setPassword(password);
-//            userDao.create(newUser);
-//            context.setVariable("message", "User " + username + " registered");
-//            context.setVariable("servlet", "index.html");
-//            context.setVariable("linkText", "Index");
-//        }
+        BusDaoImpl busDao = new BusDaoImpl();
+        RouteDaoImpl routeDao = new RouteDaoImpl();
+        DriverDaoImpl driverDao = new DriverDaoImpl();
+        List<Bus> buses = busDao.findAll();
+        List<Route> routes = routeDao.findAll();
+        List<Driver> drivers = driverDao.findAll();
+        context.setVariable("buses", buses);
+        context.setVariable("routes", routes);
+        context.setVariable("drivers", drivers);
+
+        context.setVariable("message", message);
+
         templateEngine.process("home", context, response.getWriter());
         response.setContentType("text/html;charset=UTF-8");
     }

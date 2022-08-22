@@ -10,10 +10,45 @@
 <section id="autopark">
     <div class="container">
         <div th:insert="header :: header"></div>
+
         <h2 th:text="${message}"></h2>
-        <a th:href="${nextUrl}">
-            <span th:text="${linkText}"></span>
-        </a>
+
+        <div class="tables">
+            <table border="1">
+                <caption>Buses:</caption>
+                <tr>
+                    <th>number</th>
+                </tr>
+                <tr th:each="bus : ${buses}">
+                    <td th:utext="${bus.number}">number</td>
+                </tr>
+            </table>
+            <table border="1">
+                <caption>Routes:</caption>
+                <tr>
+                    <th>name</th>
+                    <th>number</th>
+                </tr>
+                <tr th:each="route : ${routes}">
+                    <td th:utext="${route.name}">name</td>
+                    <td th:utext="${route.number}">number</td>
+                </tr>
+            </table>
+            <table border="1">
+                <caption>Drivers:</caption>
+                <tr>
+                    <th>name</th>
+                    <th>surname</th>
+                    <th>age</th>
+                </tr>
+                <tr th:each="driver : ${drivers}">
+                    <td th:utext="${driver.name}">name</td>
+                    <td th:utext="${driver.surname}">surname</td>
+                    <td th:utext="${driver.age}">age</td>
+                </tr>
+            </table>
+        </div>
+
         <div th:insert="footer :: footer"></div>
     </div>
 </section>
