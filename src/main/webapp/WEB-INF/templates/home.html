@@ -15,38 +15,61 @@
 
         <div class="tables">
             <table border="1">
-                <caption>Buses:</caption>
+                <caption>Buses Assignments:</caption>
                 <tr>
-                    <th>number</th>
+                    <th>Bus number</th>
+                    <th>Route number</th>
+                    <th>Route name</th>
+                    <th>Drivers</th>
+                    <th>Edit bus</th>
                 </tr>
-                <tr th:each="bus : ${buses}">
-                    <td th:utext="${bus.number}">number</td>
+                <tr th:each="busAssignment : ${busAssignments}">
+                    <td th:utext="${busAssignment.busNumber}">busNumber</td>
+                    <td th:utext="${busAssignment.routeNumber}">routeNumber</td>
+                    <td th:utext="${busAssignment.routeName}">routeName</td>
+                    <td th:utext="${busAssignment.driversInfo}">driversInfo</td>
+                    <td>
+<!--                        <a href="buses.html" th:href="@{/BusesServlet}">Edit bus</a>-->
+                        <form th:action="@{/BusesServlet}" method="POST">
+                            <input type="hidden" name="busId"
+                                   id="busId" th:value="${busAssignment.busId}"/>
+                            <button type="submit" value="Save">Edit bus</button>
+                        </form>
+                    </td>
+<!--                    <td><a href="buses.html" th:href="@{/BusesServlet(busId=${busAssignment.busId})}">Edit bus</a></td>-->
                 </tr>
             </table>
-            <table border="1">
-                <caption>Routes:</caption>
-                <tr>
-                    <th>name</th>
-                    <th>number</th>
-                </tr>
-                <tr th:each="route : ${routes}">
-                    <td th:utext="${route.name}">name</td>
-                    <td th:utext="${route.number}">number</td>
-                </tr>
-            </table>
-            <table border="1">
-                <caption>Drivers:</caption>
-                <tr>
-                    <th>name</th>
-                    <th>surname</th>
-                    <th>age</th>
-                </tr>
-                <tr th:each="driver : ${drivers}">
-                    <td th:utext="${driver.name}">name</td>
-                    <td th:utext="${driver.surname}">surname</td>
-                    <td th:utext="${driver.age}">age</td>
-                </tr>
-            </table>
+<!--            <div class="entityEditLink">-->
+<!--                <a href="buses.html" th:href="@{buses}">Edit buses</a>-->
+<!--                <br/>-->
+<!--                <a href="routes.html" th:href="@{routes}">Edit routes</a>-->
+<!--                <br/>-->
+<!--                <a href="drivers.html" th:href="@{drivers}">Edit drivers</a>-->
+<!--            </div>-->
+<!--            <table border="1">-->
+<!--                <caption>Routes:</caption>-->
+<!--                <tr>-->
+<!--                    <th>name</th>-->
+<!--                    <th>number</th>-->
+<!--                </tr>-->
+<!--                <tr th:each="route : ${routes}">-->
+<!--                    <td th:utext="${route.name}">name</td>-->
+<!--                    <td th:utext="${route.number}">number</td>-->
+<!--                </tr>-->
+<!--            </table>-->
+<!--            <table border="1">-->
+<!--                <caption>Drivers:</caption>-->
+<!--                <tr>-->
+<!--                    <th>name</th>-->
+<!--                    <th>surname</th>-->
+<!--                    <th>age</th>-->
+<!--                </tr>-->
+<!--                <tr th:each="driver : ${drivers}">-->
+<!--                    <td th:utext="${driver.name}">name</td>-->
+<!--                    <td th:utext="${driver.surname}">surname</td>-->
+<!--                    <td th:utext="${driver.age}">age</td>-->
+<!--                </tr>-->
+<!--            </table>-->
         </div>
 
         <div th:insert="footer :: footer"></div>

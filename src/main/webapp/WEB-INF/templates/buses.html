@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Buses</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/style.css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<section id="autopark">
+    <div class="container">
+        <div th:insert="header :: header"></div>
+        <div class="tables">
+            <table border="1">
+                <caption>Buses</caption>
+                <tr>
+                    <th>Bus number</th>
+                    <th>Bus route number</th>
+                    <th>Bus route name</th>
+                    <th>Edit bus route</th>
+                </tr>
+                <tr>
+                    <td th:utext="${bus.number}">busNumber</td>
+                    <td th:utext="${bus.route.number}">routeNumber</td>
+                    <td th:utext="${bus.route.name}">routeNumber</td>
+                    <td>
+                        <form th:action="@{/BusServlet}" method="POST">
+                            <select id="selectedRoute" name="selectedRoute">
+                                <option value="0">Select route</option>
+                                <option th:each="route : ${routes}" th:value="${route.id}" th:text="${route}"></option>
+                            </select>
+                            <input type="hidden" name="busId"
+                                   id="busId" th:value="${bus.id}"/>
+                            <input type="submit" value="Save"/>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+        <div th:insert="footer :: footer"></div>
+    </div>
+</section>
+</body>
+</html>

@@ -57,3 +57,7 @@ footer {
   display: flex;
   justify-content: space-around;
 }
+
+table caption {
+  font-weight: bold;
+}

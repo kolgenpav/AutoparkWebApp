@@ -18,7 +18,6 @@ import ua.edu.znu.autoparkweb.service.BusDaoImpl;
 import ua.edu.znu.autoparkweb.service.DriverDaoImpl;
 import ua.edu.znu.autoparkweb.service.RouteDaoImpl;
 
-import javax.persistence.TypedQuery;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +25,8 @@ import java.util.List;
 /**
  * The start point for the authenticated user.
  */
-@WebServlet("/HomeServlet")
-public class HomeServlet extends HttpServlet {
+@WebServlet("/BusesServlet")
+public class BusesServlet extends HttpServlet {
     private TemplateEngine templateEngine;
 
     @Override
@@ -37,47 +36,26 @@ public class HomeServlet extends HttpServlet {
                 .getAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATR);
     }
 
-//    @Override
-//    protected void doGet(HttpServletRequest request,
-//                         HttpServletResponse response)
-//            throws IOException {
-//        doPost(request, response);
-//    }
+    @Override
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response)
+            throws IOException {
+        doPost(request, response);
+    }
 
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws IOException {
-        String message = (String) request.getAttribute("message");
         WebContext context = getWebContext(request, response);
         BusDaoImpl busDao = new BusDaoImpl();
-        List<Bus> buses = busDao.findAll();
-        List<BusAssignment> busAssignments = new ArrayList<>();
-        for (Bus bus : buses) {
-            BusAssignment busAssignment = new BusAssignment();
-            busAssignment.setBusId(bus.getId());
-            busAssignment.setBusNumber(bus.getNumber());
-            busAssignment.setRouteNumber(bus.getRoute().getNumber());
-            busAssignment.setRouteName(bus.getRoute().getName());
-            StringBuilder driversInfo=new StringBuilder();
-            DriverDaoImpl driverDao = new DriverDaoImpl();
-            List<Driver> busDrivers = driverDao.findByBus(bus);
-            for (Driver driver : busDrivers) {
-                driversInfo.append(driver.getSurname())
-                        .append(" ")
-                        .append(driver.getName().substring(0, 1))
-                        .append(". ")
-                        .append(driver.getAge())
-                        .append(" years\n");
-            }
-            busAssignment.setDriversInfo(driversInfo.toString());
-            busAssignments.add(busAssignment);
-        }
+        Bus bus = busDao.findById(Long.parseLong(request.getParameter("busId")));
+        RouteDaoImpl routeDao = new RouteDaoImpl();
+        List<Route> routes = routeDao.findAll();
 
-        context.setVariable("busAssignments", busAssignments);
-        context.setVariable("message", message);
-
-        templateEngine.process("home", context, response.getWriter());
+        context.setVariable("bus", bus);
+        context.setVariable("routes", routes);
+        templateEngine.process("buses", context, response.getWriter());
         response.setContentType("text/html;charset=UTF-8");
     }
 

@@ -42,11 +42,9 @@ public class LoginServlet extends HttpServlet {
                           HttpServletResponse response)
             throws IOException {
         WebContext context = getWebContext(request, response);
-        response.setContentType("text/html;charset=UTF-8");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String action = request.getParameter("action");
-        UserDaoImpl userDao = new UserDaoImpl();
         String messageText;
         String nextUrl;
         if (action.equals("logout")) {
@@ -54,6 +52,7 @@ public class LoginServlet extends HttpServlet {
             nextUrl = "login";
         } else {
             try {
+                UserDaoImpl userDao = new UserDaoImpl();
                 if (userDao.isAuthenticated(username, password)) {
 //        if (isAuthenticated(username, password)) {
                     messageText = "Hello " + username + "!";
@@ -73,6 +72,7 @@ public class LoginServlet extends HttpServlet {
             context.setVariable("message", messageText);
         }
         templateEngine.process(nextUrl, context, response.getWriter());
+        response.setContentType("text/html;charset=UTF-8");
     }
 
     private WebContext getWebContext(HttpServletRequest request, HttpServletResponse response) {

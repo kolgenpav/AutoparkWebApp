@@ -29,7 +29,6 @@ public class Driver {
     private String surname;
     @Column(name = "age", nullable = false)
     private int age;
-
     @ToString.Exclude
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name = "drivers_buses",
