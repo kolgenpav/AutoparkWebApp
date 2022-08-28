@@ -1,11 +1,13 @@
 package ua.edu.znu.autoparkweb.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,6 +28,6 @@ public class Route {
     @Column(name = "number", nullable = false, unique = true)
     private int number;
     @ToString.Exclude
-    @OneToMany(mappedBy = "route", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "route", orphanRemoval = true)
     private Set<Bus> buses = new LinkedHashSet<>();
 }
