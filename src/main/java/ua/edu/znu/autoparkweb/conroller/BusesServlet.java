@@ -52,9 +52,15 @@ public class BusesServlet extends HttpServlet {
         Bus bus = busDao.findById(Long.parseLong(request.getParameter("busId")));
         RouteDaoImpl routeDao = new RouteDaoImpl();
         List<Route> routes = routeDao.findAll();
+        DriverDaoImpl driverDao = new DriverDaoImpl();
+        List<Driver> otherDrivers = driverDao.findAll();
+        List<Driver> busDrivers = driverDao.findByBus(bus);
+        otherDrivers.removeIf(d -> busDrivers.contains(d));
 
         context.setVariable("bus", bus);
         context.setVariable("routes", routes);
+        context.setVariable("busDrivers", busDrivers);
+        context.setVariable("otherDrivers", otherDrivers);
         templateEngine.process("buses", context, response.getWriter());
         response.setContentType("text/html;charset=UTF-8");
     }

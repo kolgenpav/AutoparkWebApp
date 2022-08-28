@@ -11,12 +11,16 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.IWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import ua.edu.znu.autoparkweb.model.Bus;
+import ua.edu.znu.autoparkweb.model.Driver;
 import ua.edu.znu.autoparkweb.model.Route;
 import ua.edu.znu.autoparkweb.service.BusDaoImpl;
+import ua.edu.znu.autoparkweb.service.DriverDaoImpl;
 import ua.edu.znu.autoparkweb.service.RouteDaoImpl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The start point for the authenticated user.
@@ -44,17 +48,36 @@ public class BusServlet extends HttpServlet {
                           HttpServletResponse response)
             throws IOException {
         WebContext context = getWebContext(request, response);
+        String action = request.getParameter("action");
         Long busId = Long.valueOf(request.getParameter("busId"));
-        Long routeId = Long.valueOf(request.getParameter("selectedRoute"));
         BusDaoImpl busDao = new BusDaoImpl();
         Bus bus = busDao.findById(busId);
-        RouteDaoImpl routeDao = new RouteDaoImpl();
-        Route route = routeDao.findById(routeId);
-        bus.setRoute(route);
-        //TODO org.hibernate.HibernateException: collection was evicted
-        busDao.update(bus);
+        DriverDaoImpl driverDao = new DriverDaoImpl();
+        switch(action) {
+            case "routeEdit" -> {
+                Long routeId = Long.valueOf(request.getParameter("selectedRoute"));
+                RouteDaoImpl routeDao = new RouteDaoImpl();
+                Route route = routeDao.findById(routeId);
+                bus.setRoute(route);
+                busDao.update(bus);
+            }
+            case "driverAdd" -> {
+                Long driverId = Long.valueOf(request.getParameter("selectedDriver"));
+                driverDao.addBusToDriver(driverId,bus);
+            }
+            case "driverRemove" -> {
+                Long driverId = Long.valueOf(request.getParameter("selectedDriver"));
+                driverDao.removeBusFromDriver(driverId,bus);
+            }
+        }
+
+        List<Driver> otherDrivers = driverDao.findAll();
+        List<Driver> busDrivers = driverDao.findByBus(bus);
+        otherDrivers.removeIf(d -> busDrivers.contains(d));
 
         context.setVariable("bus", bus);
+        context.setVariable("busDrivers", busDrivers);
+        context.setVariable("otherDrivers", otherDrivers);
 
         templateEngine.process("buses", context, response.getWriter());
         response.setContentType("text/html;charset=UTF-8");

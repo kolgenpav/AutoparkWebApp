@@ -3,8 +3,10 @@ package ua.edu.znu.autoparkweb.service;
 import ua.edu.znu.autoparkweb.model.Bus;
 import ua.edu.znu.autoparkweb.model.Driver;
 
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.Set;
 
 public class DriverDaoImpl extends AutoparkDaoImpl<Driver> {
 
@@ -32,5 +34,42 @@ public class DriverDaoImpl extends AutoparkDaoImpl<Driver> {
                 .createQuery("from Driver d where :bus member of d.buses", Driver.class)
                 .setParameter("bus", bus);
         return getResultList(query);
+    }
+
+    public void addBusToDriver(Long driverId, Bus bus){
+
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            Driver driver = findById(driverId);
+            Set<Bus> buses = driver.getBuses();
+            buses.add(bus);
+            update(driver);
+            transaction.commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            transaction.rollback();
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    public void removeBusFromDriver(Long driverId, Bus bus){
+
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            Driver driver = findById(driverId);
+            //TODO can not get collection
+            Set<Bus> buses = driver.getBuses();
+            buses.remove(bus);
+//            update(driver);
+            transaction.commit();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            transaction.rollback();
+        } finally {
+            entityManager.close();
+        }
     }
 }

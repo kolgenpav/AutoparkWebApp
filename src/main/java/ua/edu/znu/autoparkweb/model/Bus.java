@@ -31,6 +31,6 @@ public class Bus {
     @JoinColumn(name = "route_id")
     private Route route;
     @ToString.Exclude
-    @ManyToMany(mappedBy = "buses", cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "buses")
     private Set<Driver> drivers = new LinkedHashSet<>();
 }

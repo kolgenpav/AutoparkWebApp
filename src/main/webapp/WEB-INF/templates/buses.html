@@ -11,32 +11,81 @@
     <div class="container">
         <div th:insert="header :: header"></div>
         <div class="tables">
-            <table border="1">
-                <caption>Buses</caption>
-                <tr>
-                    <th>Bus number</th>
-                    <th>Bus route number</th>
-                    <th>Bus route name</th>
-                    <th>Edit bus route</th>
-                </tr>
-                <tr>
-                    <td th:utext="${bus.number}">busNumber</td>
-                    <td th:utext="${bus.route.number}">routeNumber</td>
-                    <td th:utext="${bus.route.name}">routeNumber</td>
-                    <td>
-                        <form th:action="@{/BusServlet}" method="POST">
-                            <select id="selectedRoute" name="selectedRoute">
-                                <option value="0">Select route</option>
-                                <option th:each="route : ${routes}" th:value="${route.id}" th:text="${route}"></option>
-                            </select>
-                            <input type="hidden" name="busId"
-                                   id="busId" th:value="${bus.id}"/>
-                            <input type="submit" value="Save"/>
-                        </form>
-                    </td>
-                </tr>
-            </table>
-
+            <div class="selectroute">
+                <table border="1">
+                    <caption>Bus route:</caption>
+                    <tr>
+                        <th>Bus number</th>
+                        <th>Bus route number</th>
+                        <th>Bus route name</th>
+                        <th>Edit bus route</th>
+                    </tr>
+                    <tr>
+                        <td th:utext="${bus.number}">busNumber</td>
+                        <td th:utext="${bus.route.number}">routeNumber</td>
+                        <td th:utext="${bus.route.name}">routeNumber</td>
+                        <td>
+                            <form th:action="@{/BusServlet}" method="POST">
+                                <select id="selectedRoute" name="selectedRoute">
+                                    <option value="0">Select route</option>
+                                    <option th:each="route : ${routes}" th:value="${route.id}"
+                                            th:text="${route}"></option>
+                                </select>
+                                <input type="hidden" name="action"
+                                       value="routeEdit"/>
+                                <input type="hidden" name="busId"
+                                       th:value="${bus.id}"/>
+                                <input type="submit" value="Save"/>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="selectdrivers">
+                <table border="1">
+                    <caption>Bus drivers:</caption>
+                    <tr>
+                        <th>Bus number</th>
+                        <th>Bus drivers</th>
+                        <th>Add bus driver</th>
+                        <th>Remove bus driver</th>
+                    </tr>
+                    <tr>
+                        <td th:utext="${bus.number}">busNumber</td>
+                        <td>
+                            <th:block th:each="driver : ${busDrivers}" th:text="${driver}"></th:block>
+                        </td>
+                        <td>
+                            <form th:action="@{/BusServlet}" method="POST">
+                                <select name="selectedDriver">
+                                    <option value="0">Select driver</option>
+                                    <option th:each="driver : ${otherDrivers}" th:value="${driver.id}"
+                                            th:text="${driver}"></option>
+                                </select>
+                                <input type="hidden" name="action"
+                                       value="driverAdd"/>
+                                <input type="hidden" name="busId"
+                                       th:value="${bus.id}"/>
+                                <input type="submit" value="Add"/>
+                            </form>
+                        </td>
+                        <td>
+                            <form th:action="@{/BusServlet}" method="POST">
+                                <select name="selectedDriver">
+                                    <option value="0">Select driver</option>
+                                    <option th:each="driver : ${busDrivers}" th:value="${driver.id}"
+                                            th:text="${driver}"></option>
+                                </select>
+                                <input type="hidden" name="action"
+                                       value="driverRemove"/>
+                                <input type="hidden" name="busId"
+                                       th:value="${bus.id}"/>
+                                <input type="submit" value="Remove"/>
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
         <div th:insert="footer :: footer"></div>
     </div>
