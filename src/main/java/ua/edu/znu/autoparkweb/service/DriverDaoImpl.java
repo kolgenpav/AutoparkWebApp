@@ -38,19 +38,19 @@ public class DriverDaoImpl extends AutoparkDaoImpl<Driver> {
 
     public void addBusToDriver(Long driverId, Bus bus){
 
-        EntityTransaction transaction = entityManager.getTransaction();
+//        EntityTransaction transaction = entityManager.getTransaction();
         try {
-            transaction.begin();
+//            transaction.begin();
             Driver driver = findById(driverId);
             Set<Bus> buses = driver.getBuses();
             buses.add(bus);
             update(driver);
-            transaction.commit();
+//            transaction.commit();
         } catch (Exception ex) {
             ex.printStackTrace();
-            transaction.rollback();
+//            transaction.rollback();
         } finally {
-            entityManager.close();
+//            entityManager.close();
         }
     }
 

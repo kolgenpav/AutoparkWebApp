@@ -18,15 +18,13 @@ import ua.edu.znu.autoparkweb.service.DriverDaoImpl;
 import ua.edu.znu.autoparkweb.service.RouteDaoImpl;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The start point for the authenticated user.
  */
-@WebServlet("/BusServlet")
-public class BusServlet extends HttpServlet {
+@WebServlet("/BusEditServlet")
+public class BusEditServlet extends HttpServlet {
     private TemplateEngine templateEngine;
 
     @Override
@@ -63,7 +61,10 @@ public class BusServlet extends HttpServlet {
             }
             case "driverAdd" -> {
                 Long driverId = Long.valueOf(request.getParameter("selectedDriver"));
-                driverDao.addBusToDriver(driverId,bus);
+                Driver driver = driverDao.findById(driverId);
+                driver.getBuses().add(bus);
+                driverDao.update(driver);
+//                driverDao.addBusToDriver(driverId,bus);
             }
             case "driverRemove" -> {
                 Long driverId = Long.valueOf(request.getParameter("selectedDriver"));
@@ -79,7 +80,7 @@ public class BusServlet extends HttpServlet {
         context.setVariable("busDrivers", busDrivers);
         context.setVariable("otherDrivers", otherDrivers);
 
-        templateEngine.process("buses", context, response.getWriter());
+        templateEngine.process("busassignment", context, response.getWriter());
         response.setContentType("text/html;charset=UTF-8");
     }
 

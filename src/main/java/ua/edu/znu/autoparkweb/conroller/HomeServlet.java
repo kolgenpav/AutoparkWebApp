@@ -12,13 +12,10 @@ import org.thymeleaf.web.IWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import ua.edu.znu.autoparkweb.model.Bus;
 import ua.edu.znu.autoparkweb.model.Driver;
-import ua.edu.znu.autoparkweb.model.Route;
 import ua.edu.znu.autoparkweb.model.dto.BusAssignment;
 import ua.edu.znu.autoparkweb.service.BusDaoImpl;
 import ua.edu.znu.autoparkweb.service.DriverDaoImpl;
-import ua.edu.znu.autoparkweb.service.RouteDaoImpl;
 
-import javax.persistence.TypedQuery;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,12 +34,7 @@ public class HomeServlet extends HttpServlet {
                 .getAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATR);
     }
 
-//    @Override
-//    protected void doGet(HttpServletRequest request,
-//                         HttpServletResponse response)
-//            throws IOException {
-//        doPost(request, response);
-//    }
+    /*doGet method does not declare due to security reason.*/
 
     @Override
     protected void doPost(HttpServletRequest request,

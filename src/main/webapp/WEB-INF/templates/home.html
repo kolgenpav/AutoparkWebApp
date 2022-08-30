@@ -29,18 +29,18 @@
                     <td th:utext="${busAssignment.routeName}">routeName</td>
                     <td th:utext="${busAssignment.driversInfo}">driversInfo</td>
                     <td>
-<!--                        <a href="buses.html" th:href="@{/BusesServlet}">Edit bus</a>-->
-                        <form th:action="@{/BusesServlet}" method="POST">
+<!--                        <a href="busassignment.html" th:href="@{/SelectedBusServlet}">Edit bus</a>-->
+                        <form th:action="@{/SelectedBusServlet}" method="POST">
                             <input type="hidden" name="busId"
                                    id="busId" th:value="${busAssignment.busId}"/>
                             <button type="submit" value="Save">Edit bus</button>
                         </form>
                     </td>
-<!--                    <td><a href="buses.html" th:href="@{/BusesServlet(busId=${busAssignment.busId})}">Edit bus</a></td>-->
+<!--                    <td><a href="busassignment.html" th:href="@{/SelectedBusServlet(busId=${busAssignment.busId})}">Edit bus</a></td>-->
                 </tr>
             </table>
 <!--            <div class="entityEditLink">-->
-<!--                <a href="buses.html" th:href="@{buses}">Edit buses</a>-->
+<!--                <a href="busassignment.html" th:href="@{buses}">Edit buses</a>-->
 <!--                <br/>-->
 <!--                <a href="routes.html" th:href="@{routes}">Edit routes</a>-->
 <!--                <br/>-->

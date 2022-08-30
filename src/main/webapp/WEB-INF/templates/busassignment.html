@@ -25,7 +25,7 @@
                         <td th:utext="${bus.route.number}">routeNumber</td>
                         <td th:utext="${bus.route.name}">routeNumber</td>
                         <td>
-                            <form th:action="@{/BusServlet}" method="POST">
+                            <form th:action="@{/BusEditServlet}" method="POST">
                                 <select id="selectedRoute" name="selectedRoute">
                                     <option value="0">Select route</option>
                                     <option th:each="route : ${routes}" th:value="${route.id}"
@@ -56,7 +56,7 @@
                             <th:block th:each="driver : ${busDrivers}" th:text="${driver}"></th:block>
                         </td>
                         <td>
-                            <form th:action="@{/BusServlet}" method="POST">
+                            <form th:action="@{/BusEditServlet}" method="POST">
                                 <select name="selectedDriver">
                                     <option value="0">Select driver</option>
                                     <option th:each="driver : ${otherDrivers}" th:value="${driver.id}"
@@ -70,7 +70,7 @@
                             </form>
                         </td>
                         <td>
-                            <form th:action="@{/BusServlet}" method="POST">
+                            <form th:action="@{/BusEditServlet}" method="POST">
                                 <select name="selectedDriver">
                                     <option value="0">Select driver</option>
                                     <option th:each="driver : ${busDrivers}" th:value="${driver.id}"
