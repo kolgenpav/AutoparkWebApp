@@ -53,13 +53,13 @@ public class SelectedBusServlet extends HttpServlet {
         DriverDaoImpl driverDao = new DriverDaoImpl();
         List<Driver> otherDrivers = driverDao.findAll();
         List<Driver> busDrivers = driverDao.findByBus(bus);
-        otherDrivers.removeIf(d -> busDrivers.contains(d));
+        otherDrivers.removeAll(busDrivers);
 
         context.setVariable("bus", bus);
         context.setVariable("routes", routes);
         context.setVariable("busDrivers", busDrivers);
         context.setVariable("otherDrivers", otherDrivers);
-        templateEngine.process("buses", context, response.getWriter());
+        templateEngine.process("busassignment", context, response.getWriter());
         response.setContentType("text/html;charset=UTF-8");
     }
 

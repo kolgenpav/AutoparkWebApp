@@ -34,6 +34,11 @@ public class HomeServlet extends HttpServlet {
                 .getAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATR);
     }
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        doPost(request, response);
+    }
+
     /*doGet method does not declare due to security reason.*/
 
     @Override
@@ -51,13 +56,13 @@ public class HomeServlet extends HttpServlet {
             busAssignment.setBusNumber(bus.getNumber());
             busAssignment.setRouteNumber(bus.getRoute().getNumber());
             busAssignment.setRouteName(bus.getRoute().getName());
-            StringBuilder driversInfo=new StringBuilder();
+            StringBuilder driversInfo = new StringBuilder();
             DriverDaoImpl driverDao = new DriverDaoImpl();
             List<Driver> busDrivers = driverDao.findByBus(bus);
             for (Driver driver : busDrivers) {
                 driversInfo.append(driver.getSurname())
                         .append(" ")
-                        .append(driver.getName().substring(0, 1))
+                        .append(driver.getName().charAt(0))
                         .append(". ")
                         .append(driver.getAge())
                         .append(" years\n");
