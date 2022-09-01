@@ -29,47 +29,14 @@
                     <td th:utext="${busAssignment.routeName}">routeName</td>
                     <td th:utext="${busAssignment.driversInfo}">driversInfo</td>
                     <td>
-<!--                        <a href="busassignment.html" th:href="@{/SelectedBusServlet}">Edit bus</a>-->
                         <form th:action="@{/SelectedBusServlet}" method="POST">
                             <input type="hidden" name="busId"
                                    id="busId" th:value="${busAssignment.busId}"/>
-                            <button type="submit" value="Save">Edit bus</button>
+                            <button type="submit" value="Save">Assignments</button>
                         </form>
                     </td>
-<!--                    <td><a href="busassignment.html" th:href="@{/SelectedBusServlet(busId=${busAssignment.busId})}">Edit bus</a></td>-->
                 </tr>
             </table>
-<!--            <div class="entityEditLink">-->
-<!--                <a href="busassignment.html" th:href="@{buses}">Edit buses</a>-->
-<!--                <br/>-->
-<!--                <a href="routes.html" th:href="@{routes}">Edit routes</a>-->
-<!--                <br/>-->
-<!--                <a href="drivers.html" th:href="@{drivers}">Edit drivers</a>-->
-<!--            </div>-->
-<!--            <table border="1">-->
-<!--                <caption>Routes:</caption>-->
-<!--                <tr>-->
-<!--                    <th>name</th>-->
-<!--                    <th>number</th>-->
-<!--                </tr>-->
-<!--                <tr th:each="route : ${routes}">-->
-<!--                    <td th:utext="${route.name}">name</td>-->
-<!--                    <td th:utext="${route.number}">number</td>-->
-<!--                </tr>-->
-<!--            </table>-->
-<!--            <table border="1">-->
-<!--                <caption>Drivers:</caption>-->
-<!--                <tr>-->
-<!--                    <th>name</th>-->
-<!--                    <th>surname</th>-->
-<!--                    <th>age</th>-->
-<!--                </tr>-->
-<!--                <tr th:each="driver : ${drivers}">-->
-<!--                    <td th:utext="${driver.name}">name</td>-->
-<!--                    <td th:utext="${driver.surname}">surname</td>-->
-<!--                    <td th:utext="${driver.age}">age</td>-->
-<!--                </tr>-->
-<!--            </table>-->
         </div>
 
         <div th:insert="footer :: footer"></div>
