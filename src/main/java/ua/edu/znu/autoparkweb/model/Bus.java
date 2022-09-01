@@ -1,6 +1,7 @@
 package ua.edu.znu.autoparkweb.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.CascadeType;
@@ -27,10 +28,12 @@ public class Bus {
     @Column(name = "number", nullable = false, unique = true, length = 10)
     private String number;
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "route_id")
     private Route route;
     @ToString.Exclude
-    @ManyToMany(mappedBy = "buses")
+    @EqualsAndHashCode.Exclude
+    //TODO CascadeType.REMOVE deletes driver while bus remove!!!
+    @ManyToMany(mappedBy = "buses", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Driver> drivers = new LinkedHashSet<>();
 }

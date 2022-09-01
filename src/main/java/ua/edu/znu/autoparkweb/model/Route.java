@@ -7,18 +7,33 @@ import lombok.ToString;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.util.LinkedHashSet;
 import java.util.Set;
 @Data
 @Entity
 @Table(name = "routes")
 public class Route {
+    /**
+     * Empty route settled to bus while new bus creation to NullPoinerException avoid.
+     */
+    @Transient
+    private static Route emptyRoute;
+    public static Route getEmptyRoute(){
+        if(emptyRoute == null){
+            Route emptyRoute = new Route();
+            emptyRoute.setName("");
+            emptyRoute.setNumber(-1);
+            return emptyRoute;
+        }
+        return emptyRoute;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -28,6 +43,7 @@ public class Route {
     @Column(name = "number", nullable = false, unique = true)
     private int number;
     @ToString.Exclude
-    @OneToMany(mappedBy = "route", orphanRemoval = true)
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "route", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Bus> buses = new LinkedHashSet<>();
 }
