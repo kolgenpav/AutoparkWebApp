@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Buses</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/style.css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<section id="autopark">
+    <div class="container">
+        <div th:insert="header :: header"></div>
+
+        <div class="tables">
+            <table border="1">
+                <caption>Buses:</caption>
+                <tr>
+                    <th>Bus id</th>
+                    <th>Bus number</th>
+                    <th>Edit bus</th>
+                    <th>Remove bus</th>
+                </tr>
+                <tr th:each="bus : ${buses}">
+                    <td th:utext="${bus.id}">busId</td>
+                    <td th:utext="${bus.number}">busNumber</td>
+                    <td>
+                        <form th:action="@{/BusesServlet}" method="POST">
+                            <input type="hidden" name="action"
+                                   value="busEdit"/>
+                            <input type="hidden" name="busId"
+                                   th:value="${bus.id}"/>
+                            <input type="submit" value="Edit"/>
+                        </form>
+                    </td>
+                    <td>
+                        <form th:action="@{/BusesServlet}" method="POST">
+                            <input type="hidden" name="action"
+                                   value="busRemove"/>
+                            <input type="hidden" name="busId"
+                                   th:value="${bus.id}"/>
+                            <input type="submit" value="Remove"/>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+
+            <p><a href="busadd.html" th:href="@{/BusAddServlet}">Add bus</a></p>
+
+            <div th:insert="footer :: footer"></div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
