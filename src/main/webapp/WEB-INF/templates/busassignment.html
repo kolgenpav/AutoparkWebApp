@@ -25,17 +25,17 @@
                         <td th:utext="${bus.route.number}">routeNumber</td>
                         <td th:utext="${bus.route.name}">routeNumber</td>
                         <td>
-                            <form th:action="@{/BusEditServlet}" method="POST">
+                            <form th:action="@{/BusAssignmentServlet}" method="POST">
                                 <select id="selectedRoute" name="selectedRoute">
                                     <option value="0">Select route</option>
                                     <option th:each="route : ${routes}" th:value="${route.id}"
                                             th:text="${route}"></option>
                                 </select>
                                 <input type="hidden" name="action"
-                                       value="routeEdit"/>
+                                       value="routeAssign"/>
                                 <input type="hidden" name="busId"
                                        th:value="${bus.id}"/>
-                                <input type="submit" value="Save"/>
+                                <input type="submit" value="Assign"/>
                             </form>
                         </td>
                     </tr>
@@ -56,17 +56,17 @@
                             <th:block th:each="driver : ${busDrivers}" th:text="${driver}"></th:block>
                         </td>
                         <td>
-                            <form th:action="@{/BusEditServlet}" method="POST">
+                            <form th:action="@{/BusAssignmentServlet}" method="POST">
                                 <select name="selectedDriver">
                                     <option value="0">Select driver</option>
                                     <option th:each="driver : ${otherDrivers}" th:value="${driver.id}"
                                             th:text="${driver}"></option>
                                 </select>
                                 <input type="hidden" name="action"
-                                       value="driverAdd"/>
+                                       value="driverAssign"/>
                                 <input type="hidden" name="busId"
                                        th:value="${bus.id}"/>
-                                <input type="submit" value="Add"/>
+                                <input type="submit" value="Assign"/>
                             </form>
                         </td>
                         <td>

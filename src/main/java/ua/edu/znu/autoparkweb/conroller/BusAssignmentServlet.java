@@ -23,8 +23,8 @@ import java.util.List;
 /**
  * The start point for the authenticated user.
  */
-@WebServlet("/BusEditServlet")
-public class BusEditServlet extends HttpServlet {
+@WebServlet("/BusAssignmentServlet")
+public class BusAssignmentServlet extends HttpServlet {
     private TemplateEngine templateEngine;
 
     @Override
@@ -47,20 +47,20 @@ public class BusEditServlet extends HttpServlet {
             throws IOException {
         WebContext context = getWebContext(request, response);
         String action = request.getParameter("action");
-        Long busId = Long.valueOf(request.getParameter("busId"));
+        long busId = Long.parseLong(request.getParameter("busId"));
         BusDaoImpl busDao = new BusDaoImpl();
         Bus bus = busDao.findById(busId);
         DriverDaoImpl driverDao = new DriverDaoImpl();
         switch(action) {
-            case "routeEdit" -> {
-                Long routeId = Long.valueOf(request.getParameter("selectedRoute"));
+            case "routeAssign" -> {
+                long routeId = Long.parseLong(request.getParameter("selectedRoute"));
                 RouteDaoImpl routeDao = new RouteDaoImpl();
                 Route route = routeDao.findById(routeId);
                 bus.setRoute(route);
                 busDao.update(bus);
             }
-            case "driverAdd" -> {
-                Long driverId = Long.valueOf(request.getParameter("selectedDriver"));
+            case "driverAssign" -> {
+                long driverId = Long.parseLong(request.getParameter("selectedDriver"));
                 Driver driver = driverDao.findById(driverId);
                 driver.getBuses().add(bus);
                 driverDao.update(driver);
@@ -74,7 +74,7 @@ public class BusEditServlet extends HttpServlet {
 
         List<Driver> otherDrivers = driverDao.findAll();
         List<Driver> busDrivers = driverDao.findByBus(bus);
-        otherDrivers.removeIf(d -> busDrivers.contains(d));
+        otherDrivers.removeAll(busDrivers);
 
         context.setVariable("bus", bus);
         context.setVariable("busDrivers", busDrivers);
