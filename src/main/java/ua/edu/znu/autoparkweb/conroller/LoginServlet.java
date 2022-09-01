@@ -82,7 +82,7 @@ public class LoginServlet extends HttpServlet {
     }
 
     /**
-     * Authenticates user.
+     * Authenticates user - for initial version without database users table.
      *
      * @param username username
      * @param password password
