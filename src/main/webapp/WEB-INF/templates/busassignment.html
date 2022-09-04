@@ -70,7 +70,7 @@
                             </form>
                         </td>
                         <td>
-                            <form th:action="@{/BusEditServlet}" method="POST">
+                            <form th:action="@{/BusAssignmentServlet}" method="POST">
                                 <select name="selectedDriver">
                                     <option value="0">Select driver</option>
                                     <option th:each="driver : ${busDrivers}" th:value="${driver.id}"
