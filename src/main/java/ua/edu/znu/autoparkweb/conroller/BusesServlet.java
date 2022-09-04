@@ -39,7 +39,6 @@ public class BusesServlet extends HttpServlet {
         WebContext context = getWebContext(request, response);
         BusDaoImpl busDao = new BusDaoImpl();
         List<Bus> buses = busDao.findAll();
-//        System.out.println("Buses size is: " + buses.size());
 
         context.setVariable("buses", buses);
         templateEngine.process("buses", context, response.getWriter());
