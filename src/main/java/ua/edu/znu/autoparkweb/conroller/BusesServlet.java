@@ -11,7 +11,9 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.IWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import ua.edu.znu.autoparkweb.model.Bus;
+import ua.edu.znu.autoparkweb.model.Driver;
 import ua.edu.znu.autoparkweb.service.BusDaoImpl;
+import ua.edu.znu.autoparkweb.service.DriverDaoImpl;
 
 import java.io.IOException;
 import java.util.List;
@@ -53,7 +55,8 @@ public class BusesServlet extends HttpServlet {
         Bus bus;
         List<Bus> buses;
         BusDaoImpl busDao = new BusDaoImpl();
-        switch(action) {
+        DriverDaoImpl driverDao = new DriverDaoImpl();
+        switch (action) {
             //TODO not worked properly
             case "busEdit" -> {
                 long busId = Long.parseLong(request.getParameter("busId"));
@@ -67,6 +70,11 @@ public class BusesServlet extends HttpServlet {
             case "busRemove" -> {
                 long busId = Long.parseLong(request.getParameter("busId"));
                 bus = busDao.findById(busId);
+                /*You need delete bus's drivers first due to bidirectional many-to-many association */
+                for (Driver driver : bus.getDrivers()) {
+                    driver.getBuses().remove(bus);
+                    driverDao.update(driver);
+                }
                 busDao.delete(bus);
                 buses = busDao.findAll();
                 context.setVariable("buses", buses);

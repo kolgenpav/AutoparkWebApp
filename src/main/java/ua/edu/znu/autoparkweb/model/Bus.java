@@ -33,7 +33,7 @@ public class Bus {
     private Route route;
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    //TODO CascadeType.REMOVE deletes driver while bus remove!!!
+    /*CascadeType.REMOVE deletes driver while bus remove!!!*/
     @ManyToMany(mappedBy = "buses", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Driver> drivers = new LinkedHashSet<>();
 }
