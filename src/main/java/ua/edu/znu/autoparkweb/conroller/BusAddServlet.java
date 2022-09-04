@@ -45,16 +45,16 @@ public class BusAddServlet extends HttpServlet {
             throws IOException, ServletException {
         BusDaoImpl busDao = new BusDaoImpl();
         Bus bus = new Bus();
-        String busNumber = request.getParameter("addBusNumber");
+        String busNumber = request.getParameter("busNumber");
         bus.setNumber(busNumber);
         RouteDaoImpl routeDao = new RouteDaoImpl();
         Route emptyRoute = routeDao.findByNumber(-1);
         if (emptyRoute == null) {
             emptyRoute = Route.getEmptyRoute();
+            routeDao.create(emptyRoute);
         }
         bus.setRoute(emptyRoute);
         busDao.create(bus);
-        busDao = new BusDaoImpl();
         bus = busDao.findByNumber(busNumber);
         getServletContext().getRequestDispatcher("/SelectedBusServlet?busId=" + bus.getId())
                 .forward(request, response);
