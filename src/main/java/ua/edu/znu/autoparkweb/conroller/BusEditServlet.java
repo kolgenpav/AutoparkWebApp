@@ -11,18 +11,15 @@ import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.IWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import ua.edu.znu.autoparkweb.model.Bus;
-import ua.edu.znu.autoparkweb.model.Driver;
 import ua.edu.znu.autoparkweb.service.BusDaoImpl;
-import ua.edu.znu.autoparkweb.service.DriverDaoImpl;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * The start point for the authenticated user.
  */
-@WebServlet("/BusesServlet")
-public class BusesServlet extends HttpServlet {
+@WebServlet("/BusEditServlet")
+public class BusEditServlet extends HttpServlet {
     private TemplateEngine templateEngine;
 
     @Override
@@ -36,14 +33,7 @@ public class BusesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response)
             throws IOException {
-        WebContext context = getWebContext(request, response);
-        BusDaoImpl busDao = new BusDaoImpl();
-        List<Bus> buses = busDao.findAll();
-//        System.out.println("Buses size is: " + buses.size());
-
-        context.setVariable("buses", buses);
-        templateEngine.process("buses", context, response.getWriter());
-        response.setContentType("text/html;charset=UTF-8");
+        doPost(request, response);
     }
 
     @Override
@@ -51,35 +41,14 @@ public class BusesServlet extends HttpServlet {
                           HttpServletResponse response)
             throws IOException {
         WebContext context = getWebContext(request, response);
-        String action = request.getParameter("action");
-        Bus bus;
-        List<Bus> buses;
+
         BusDaoImpl busDao = new BusDaoImpl();
-        switch (action) {
-            case "busEdit" -> {
-                long busId = Long.parseLong(request.getParameter("busId"));
-                bus = busDao.findById(busId);
-                String busNumber = request.getParameter("busNumber");
-                bus.setNumber(busNumber);
-                busDao.update(bus);
-            }
-            case "busRemove" -> {
-                long busId = Long.parseLong(request.getParameter("busId"));
-                bus = busDao.findById(busId);
-                DriverDaoImpl driverDao = new DriverDaoImpl();
-                /*You need delete the bus's drivers first due to bidirectional many-to-many association */
-                for (Driver driver : bus.getDrivers()) {
-                    driver.getBuses().remove(bus);
-                    driverDao.update(driver);
-                }
-                busDao.delete(bus);
-            }
-        }
-        buses = busDao.findAll();
-        context.setVariable("buses", buses);
-        templateEngine.process("buses", context, response.getWriter());
+        long busId = Long.parseLong(request.getParameter("busId"));
+        Bus bus = busDao.findById(busId);
+        context.setVariable("bus", bus);
+        templateEngine.process("busedit", context, response.getWriter());
         response.setContentType("text/html;charset=UTF-8");
-}
+    }
 
     private WebContext getWebContext(HttpServletRequest request, HttpServletResponse response) {
         IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())

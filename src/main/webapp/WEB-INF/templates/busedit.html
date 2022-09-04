@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Bus</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/style.css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<section id="autopark">
+    <div class="container">
+        <div th:insert="header :: header"></div>
+
+        <div class="addeditentity">
+            <form th:action="@{/BusesServlet}" method="POST">
+                <input type="hidden" name="action"
+                       value="busEdit"/>
+                <label for="busId">Bus Id:</label><br>
+                <input type="text" id=busId name="busId" th:value="${bus.id}" readonly/><br>
+                <label for="busNumber">Bus number:</label><br>
+                <input type="text" id=busNumber name="busNumber" th:value="${bus.number}"/><br>
+                <input type="submit" value="Edit"/>
+            </form>
+
+        </div>
+
+        <div th:insert="footer :: footer"></div>
+    </div>
+</section>
+</body>
+</html>
