@@ -64,7 +64,6 @@ public class BusAssignmentServlet extends HttpServlet {
                 Driver driver = driverDao.findById(driverId);
                 driver.getBuses().add(bus);
                 driverDao.update(driver);
-//                driverDao.addBusToDriver(driverId,bus);
             }
             case "driverRemove" -> {
                 Long driverId = Long.valueOf(request.getParameter("selectedDriver"));
