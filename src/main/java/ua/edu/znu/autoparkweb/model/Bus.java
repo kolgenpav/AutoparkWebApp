@@ -34,6 +34,6 @@ public class Bus {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     /*CascadeType.REMOVE deletes driver while bus remove!!!*/
-    @ManyToMany(mappedBy = "buses", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(mappedBy = "buses", cascade = CascadeType.PERSIST)
     private Set<Driver> drivers = new LinkedHashSet<>();
 }

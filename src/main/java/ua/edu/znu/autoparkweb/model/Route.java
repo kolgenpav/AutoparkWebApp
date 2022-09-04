@@ -44,6 +44,6 @@ public class Route {
     private int number;
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "route", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(mappedBy = "route", cascade = CascadeType.PERSIST)
     private Set<Bus> buses = new LinkedHashSet<>();
 }
