@@ -7,6 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * Specific Bus methods.
+ */
 public class BusDaoImpl extends AutoparkDaoImpl<Bus> {
 
     public BusDaoImpl() {

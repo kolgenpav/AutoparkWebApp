@@ -17,7 +17,7 @@ import javax.persistence.NoResultException;
 import java.io.IOException;
 
 /**
- * Servlet that makes new user registration - now does not use.
+ * Servlet that makes new user registration - now does not used.
  */
 @WebServlet("/RegistrationServlet")
 public class RegistrationServlet extends HttpServlet {

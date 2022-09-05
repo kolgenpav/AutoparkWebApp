@@ -9,6 +9,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+/**
+ * Autopark application's user.
+ */
 @Data
 @Entity
 @Table(name = "users")

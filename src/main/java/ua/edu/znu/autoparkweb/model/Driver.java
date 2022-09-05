@@ -15,6 +15,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+/**
+ * Bus driver.
+ */
 @Data
 @Entity
 @Table(name = "drivers")

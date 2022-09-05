@@ -8,7 +8,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * Universal methods that working with entities' instances of Autopark database.
+ * Universal methods that working with entities of Autopark database.
  *
  * @param <T> entity type
  */

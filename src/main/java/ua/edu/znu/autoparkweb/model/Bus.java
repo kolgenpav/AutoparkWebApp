@@ -17,6 +17,9 @@ import javax.persistence.Table;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * Autopark bus.
+ */
 @Data
 @Entity
 @Table(name = "buses")

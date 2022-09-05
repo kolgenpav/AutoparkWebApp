@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * The start point for the authenticated user.
+ * Sends the selected bus assignment to the busassignment.html.
  */
 @WebServlet("/SelectedBusServlet")
 public class SelectedBusServlet extends HttpServlet {

@@ -4,7 +4,8 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * Interface with universal methods that working with entities' instances of Autopark database..
+ * Interface with universal methods that working with entities
+ * of Autopark database.
  */
 public interface AutoparkDao<T> {
 
