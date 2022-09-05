@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Routes</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/style.css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<section id="autopark">
+    <div class="container">
+        <div th:insert="header :: header"></div>
+
+        <div class="tables">
+            <table border="1">
+                <caption>Routes:</caption>
+                <tr>
+                    <th>Route id</th>
+                    <th>Route name</th>
+                    <th>Route number</th>
+                    <th>Edit route</th>
+                    <th>Remove route</th>
+                </tr>
+                <tr th:each="route : ${routes}">
+                    <td th:utext="${route.id}">routeId</td>
+                    <td th:utext="${route.name}">routeName</td>
+                    <td th:utext="${route.number}">routeNumber</td>
+                    <td>
+                        <form th:action="@{/RouteEditServlet}" method="POST">
+                            <input type="hidden" name="action"
+                                   value="routeEdit"/>
+                            <input type="hidden" name="routeId"
+                                   th:value="${route.id}"/>
+                            <input type="submit" value="Edit"/>
+                        </form>
+                    </td>
+                    <td>
+                        <form th:action="@{/RoutesServlet}" method="POST">
+                            <input type="hidden" name="action"
+                                   value="routeRemove"/>
+                            <input type="hidden" name="routeId"
+                                   th:value="${route.id}"/>
+                            <input type="submit" value="Remove"/>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+
+            <p><a href="routeadd.html" th:href="@{/RouteAddServlet}">Add route</a></p>
+
+            <div th:insert="footer :: footer"></div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

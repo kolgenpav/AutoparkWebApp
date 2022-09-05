@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Route</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/style.css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<section id="autopark">
+    <div class="container">
+        <div th:insert="header :: header"></div>
+
+        <div class="addeditentity">
+            <form th:action="@{/RoutesServlet}" method="POST">
+                <input type="hidden" name="action"
+                       value="routeEdit"/>
+                <label for="routeId">Route Id:</label><br>
+                <input type="text" id=routeId name="routeId" th:value="${route.id}" readonly/><br>
+                <label for="routeName">Route name:</label><br>
+                <input type="text" id=routeName name="routeName" th:value="${route.name}"/><br>
+                <label for="routeNumber">Route number:</label><br>
+                <input type="text" id=routeNumber name="routeNumber" th:value="${route.number}"/><br>
+                <input type="submit" value="Edit"/>
+            </form>
+
+        </div>
+
+        <div th:insert="footer :: footer"></div>
+    </div>
+</section>
+</body>
+</html>
