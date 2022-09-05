@@ -10,6 +10,9 @@ import org.thymeleaf.templateresolver.WebApplicationTemplateResolver;
 import org.thymeleaf.web.IWebApplication;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 
+/**
+ * Performs Thymeleaf configuration.
+ */
 @WebListener
 public class ThymeleafConfiguration implements ServletContextListener {
     public static final String TEMPLATE_ENGINE_ATR = "ua.edu.znu.servletstudy.TemplateEngineInstance";

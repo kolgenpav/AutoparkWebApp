@@ -15,6 +15,10 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+/**
+ * Bus route.
+ */
 @Data
 @Entity
 @Table(name = "routes")
@@ -27,7 +31,7 @@ public class Route {
     public static Route getEmptyRoute(){
         if(emptyRoute == null){
             Route emptyRoute = new Route();
-            emptyRoute.setName("");
+            emptyRoute.setName("EMPTY ROUTE - DON'T REMOVE THIS ROUTE!!!");
             emptyRoute.setNumber(-1);
             return emptyRoute;
         }

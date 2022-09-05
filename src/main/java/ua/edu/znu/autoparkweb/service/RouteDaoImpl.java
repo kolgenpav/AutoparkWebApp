@@ -7,6 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
+/**
+ * Specific Route methods.
+ */
 public class RouteDaoImpl extends AutoparkDaoImpl<Route> {
 
     public RouteDaoImpl() {

@@ -8,6 +8,9 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Specific Driver methods.
+ */
 public class DriverDaoImpl extends AutoparkDaoImpl<Driver> {
 
     public DriverDaoImpl() {
