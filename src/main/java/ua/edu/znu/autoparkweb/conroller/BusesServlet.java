@@ -19,7 +19,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * The start point for the authenticated user.
+ * Populates buses.html with current list of buses in the doGet.
+ * Performs bus edit and bus remove in the doPost.
  */
 @WebServlet("/BusesServlet")
 public class BusesServlet extends HttpServlet {
@@ -49,22 +50,17 @@ public class BusesServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws IOException {
-        WebContext context = getWebContext(request, response);
         String action = request.getParameter("action");
-        Bus bus;
-        List<Bus> buses;
         BusDaoImpl busDao = new BusDaoImpl();
+        long busId = Long.parseLong(request.getParameter("busId"));
+        Bus bus = busDao.findById(busId);
         switch (action) {
             case "busEdit" -> {
-                long busId = Long.parseLong(request.getParameter("busId"));
-                bus = busDao.findById(busId);
                 String busNumber = request.getParameter("busNumber");
                 bus.setNumber(busNumber);
                 busDao.update(bus);
             }
             case "busRemove" -> {
-                long busId = Long.parseLong(request.getParameter("busId"));
-                bus = busDao.findById(busId);
                 DriverDaoImpl driverDao = new DriverDaoImpl();
                 /*You need delete the bus's drivers first due to bidirectional many-to-many association */
                 for (Driver driver : bus.getDrivers()) {
@@ -74,10 +70,8 @@ public class BusesServlet extends HttpServlet {
                 busDao.delete(bus);
             }
         }
-        buses = busDao.findAll();
-        context.setVariable("buses", buses);
-        templateEngine.process("buses", context, response.getWriter());
-        response.setContentType("text/html;charset=UTF-8");
+        /*Make GET request to this servlet*/
+        response.sendRedirect(request.getContextPath() + "/BusesServlet");
 }
 
     private WebContext getWebContext(HttpServletRequest request, HttpServletResponse response) {
