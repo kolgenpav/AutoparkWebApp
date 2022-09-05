@@ -39,8 +39,6 @@ public class HomeServlet extends HttpServlet {
         doPost(request, response);
     }
 
-    /*doGet method does not declare due to security reason.*/
-
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)

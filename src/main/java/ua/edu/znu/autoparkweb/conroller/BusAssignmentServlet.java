@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * The start point for the authenticated user.
+ * Assigns the route and drivers to the selected bus.
  */
 @WebServlet("/BusAssignmentServlet")
 public class BusAssignmentServlet extends HttpServlet {
@@ -51,7 +51,7 @@ public class BusAssignmentServlet extends HttpServlet {
         BusDaoImpl busDao = new BusDaoImpl();
         Bus bus = busDao.findById(busId);
         DriverDaoImpl driverDao = new DriverDaoImpl();
-        switch(action) {
+        switch (action) {
             case "routeAssign" -> {
                 long routeId = Long.parseLong(request.getParameter("selectedRoute"));
                 RouteDaoImpl routeDao = new RouteDaoImpl();
@@ -67,7 +67,7 @@ public class BusAssignmentServlet extends HttpServlet {
             }
             case "driverRemove" -> {
                 Long driverId = Long.valueOf(request.getParameter("selectedDriver"));
-                driverDao.removeBusFromDriver(driverId,bus);
+                driverDao.removeBusFromDriver(driverId, bus);
             }
         }
 

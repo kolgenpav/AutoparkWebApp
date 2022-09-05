@@ -18,7 +18,7 @@ import ua.edu.znu.autoparkweb.service.RouteDaoImpl;
 import java.io.IOException;
 
 /**
- * The start point for the authenticated user.
+ * Adds a new bus.
  */
 @WebServlet("/BusAddServlet")
 public class BusAddServlet extends HttpServlet {

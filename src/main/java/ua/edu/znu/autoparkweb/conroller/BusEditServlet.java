@@ -16,7 +16,7 @@ import ua.edu.znu.autoparkweb.service.BusDaoImpl;
 import java.io.IOException;
 
 /**
- * The start point for the authenticated user.
+ * Edits existing bus.
  */
 @WebServlet("/BusEditServlet")
 public class BusEditServlet extends HttpServlet {
