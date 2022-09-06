@@ -31,7 +31,7 @@ public class Bus {
     @Column(name = "number", nullable = false, unique = true, length = 10)
     private String number;
     @ToString.Exclude
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "route_id")
     private Route route;
     @ToString.Exclude
