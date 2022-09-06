@@ -65,8 +65,12 @@ public class RoutesServlet extends HttpServlet {
             case "routeRemove" -> {
                 BusDaoImpl busDao = new BusDaoImpl();
                 /*You need to set emptyRoute for the route's busses first*/
+                Route emptyRoute = routeDao.findByNumber(-1);
+                if(emptyRoute == null){
+                    emptyRoute = Route.getEmptyRoute();
+                }
                 for (Bus bus : route.getBuses()) {
-                    bus.setRoute(Route.getEmptyRoute());
+                    bus.setRoute(emptyRoute);
                     busDao.update(bus);
                 }
                 routeDao.delete(route);
