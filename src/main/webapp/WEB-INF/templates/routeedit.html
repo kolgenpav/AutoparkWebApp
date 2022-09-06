@@ -9,7 +9,7 @@
 <body>
 <section id="autopark">
     <div class="container">
-        <div th:insert="header :: header"></div>
+        <div th:insert="fragments/header :: header"></div>
 
         <div class="addeditentity">
             <form th:action="@{/RoutesServlet}" method="POST">
@@ -26,7 +26,7 @@
 
         </div>
 
-        <div th:insert="footer :: footer"></div>
+        <div th:insert="fragments/footer :: footer"></div>
     </div>
 </section>
 </body>

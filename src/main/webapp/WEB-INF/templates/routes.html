@@ -9,7 +9,7 @@
 <body>
 <section id="autopark">
     <div class="container">
-        <div th:insert="header :: header"></div>
+        <div th:insert="fragments/header :: header"></div>
 
         <div class="tables">
             <table border="1">
@@ -48,7 +48,7 @@
 
             <p><a href="routeadd.html" th:href="@{/RouteAddServlet}">Add route</a></p>
 
-            <div th:insert="footer :: footer"></div>
+            <div th:insert="fragments/footer :: footer"></div>
         </div>
     </div>
 </section>

@@ -11,7 +11,7 @@
 <body>
 <section id="autopark">
     <div class="container">
-        <div th:insert="header :: header"></div>
+        <div th:insert="fragments/header :: header"></div>
         <div class="content">
             <div class="companyname">
                 <img src="../../images/userregistration.jpg" th:src="@{/images/userregistration.jpg}" alt="New user registration" width="600" height="350">
@@ -26,7 +26,7 @@
                 <a href="login.html" th:href="@{/login.html}">Login</a>
             </div>
         </div>
-        <div th:insert="footer :: footer"></div>
+        <div th:insert="fragments/footer :: footer"></div>
     </div>
 </section>
 </body>

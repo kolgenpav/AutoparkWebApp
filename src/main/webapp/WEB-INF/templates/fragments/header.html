@@ -8,15 +8,15 @@
 </head>
 <body>
 <header th:fragment="header">
-    <!--    <a href="../../index.html" th:href="${/index.html}">-->
-    <img src="../../images/bus-logo.png" th:src="@{/images/bus-logo.png}" alt="logo" width="100" height="100">
-    <!--    </a>-->
+<!--    <a href="../../login.html" th:href="${/login.html}">-->
+        <img src="../../images/bus-logo.png" th:src="@{/images/bus-logo.png}" alt="logo" width="100" height="100">
+<!--    </a>-->
     <h1>Autopark</h1>
     <ul>
         <li><a href="home.html" th:href="@{HomeServlet}">Home</a></li>
         <li><a href="buses.html" th:href="@{BusesServlet}">Buses</a></li>
         <li><a href="routes.html" th:href="@{RoutesServlet}">Routes</a></li>
-        <li>Drivers</li>
+        <li><a href="drivers.html" th:href="@{DriversServlet}">Drivers</a></li>
     </ul>
     <form class="header-form"
           role="form" action="LoginServlet" method="post">
