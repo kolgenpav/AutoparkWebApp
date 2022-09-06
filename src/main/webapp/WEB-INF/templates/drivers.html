@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Drivers</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/style.css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<section id="autopark">
+    <div class="container">
+        <div th:insert="fragments/header :: header"></div>
+
+        <div class="tables">
+            <table border="1">
+                <caption>Drivers:</caption>
+                <tr>
+                    <th>Driver id</th>
+                    <th>Driver name</th>
+                    <th>Driver surname</th>
+                    <th>Driver age</th>
+                    <th>Edit driver</th>
+                    <th>Remove driver</th>
+                </tr>
+                <tr th:each="driver : ${drivers}">
+                    <td th:utext="${driver.id}">driverId</td>
+                    <td th:utext="${driver.name}">driverName</td>
+                    <td th:utext="${driver.surname}">driverSurname</td>
+                    <td th:utext="${driver.age}">driverAge</td>
+                    <td>
+                        <form th:action="@{/DriverEditServlet}" method="POST">
+                            <input type="hidden" name="action"
+                                   value="driverEdit"/>
+                            <input type="hidden" name="driverId"
+                                   th:value="${driver.id}"/>
+                            <input type="submit" value="Edit"/>
+                        </form>
+                    </td>
+                    <td>
+                        <form th:action="@{/DriversServlet}" method="POST">
+                            <input type="hidden" name="action"
+                                   value="driverRemove"/>
+                            <input type="hidden" name="driverId"
+                                   th:value="${driver.id}"/>
+                            <input type="submit" value="Remove"/>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+
+            <p><a href="driveradd.html" th:href="@{/DriverAddServlet}">Add driver</a></p>
+
+            <div th:insert="fragments/footer :: footer"></div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

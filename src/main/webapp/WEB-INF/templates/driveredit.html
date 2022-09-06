@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Driver</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/style.css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<section id="autopark">
+    <div class="container">
+        <div th:insert="fragments/header :: header"></div>
+
+        <div class="addeditentity">
+            <form th:action="@{/DriversServlet}" method="POST">
+                <input type="hidden" name="action"
+                       value="driverEdit"/>
+                <label for="driverId">Driver Id:</label><br>
+                <input type="text" id=driverId name="driverId" th:value="${driver.id}" readonly/><br>
+                <label for="driverName">Driver name:</label><br>
+                <input type="text" id=driverName name="driverName" th:value="${driver.name}"/><br>
+                <label for="driverSurname">Driver surname:</label><br>
+                <input type="text" id=driverSurname name="driverSurname" th:value="${driver.surname}"/><br>
+                <label for="driverAge">Driver age:</label><br>
+                <input type="text" id=driverAge name="driverAge" th:value="${driver.age}"/><br>
+                <input type="submit" value="Edit"/>
+            </form>
+
+        </div>
+
+        <div th:insert="fragments/footer :: footer"></div>
+    </div>
+</section>
+</body>
+</html>

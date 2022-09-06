@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Driver</title>
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/style.css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<section id="autopark">
+    <div class="container">
+        <div th:insert="fragments/header :: header"></div>
+
+        <div class="addeditentity">
+            <p>Add new driver:</p>
+            <form th:action="@{/DriverAddServlet}" method="POST">
+                <label for="driverName">Driver Name:</label><br>
+                <input type="text" id="driverName" name="driverName" /><br>
+                <label for="driverSurname">Driver Surname:</label><br>
+                <input type="text" id="driverSurname" name="driverSurname" /><br>
+                <label for="driverAge">Driver Age:</label><br>
+                <input type="text" id="driverAge" name="driverAge" /><br>
+                <input type="submit" value="Add"/>
+            </form>
+        </div>
+
+        <div th:insert="fragments/footer :: footer"></div>
+    </div>
+</section>
+</body>
+</html>
