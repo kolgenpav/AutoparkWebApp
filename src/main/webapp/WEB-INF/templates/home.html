@@ -29,7 +29,7 @@
                     <td th:utext="${busAssignment.routeName}">routeName</td>
                     <td th:utext="${busAssignment.driversInfo}">driversInfo</td>
                     <td>
-                        <form th:action="@{/SelectedBusServlet}" method="POST">
+                        <form th:action="@{/SelectedBusServlet}" method="post">
                             <input type="hidden" name="busId"
                                    id="busId" th:value="${busAssignment.busId}"/>
                             <button type="submit" value="Save">Assignments</button>
