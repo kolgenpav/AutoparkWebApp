@@ -28,7 +28,7 @@
                             <form th:action="@{/BusAssignmentServlet}" method="POST">
                                 <select id="selectedRoute" name="selectedRoute">
                                     <option value="0">Select route</option>
-                                    <option th:each="route : ${routes}" th:value="${route.id}"
+                                    <option th:each="route : ${otherRoutes}" th:value="${route.id}"
                                             th:text="${route}"></option>
                                 </select>
                                 <input type="hidden" name="action"

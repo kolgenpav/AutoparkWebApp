@@ -49,14 +49,16 @@ public class SelectedBusServlet extends HttpServlet {
         BusDaoImpl busDao = new BusDaoImpl();
         Bus bus = busDao.findById(Long.parseLong(request.getParameter("busId")));
         RouteDaoImpl routeDao = new RouteDaoImpl();
-        List<Route> routes = routeDao.findAll();
+        List<Route> otherRoutes = routeDao.findAll();
+        Route busRoute = routeDao.findByBus(bus);
+        otherRoutes.remove(busRoute);
         DriverDaoImpl driverDao = new DriverDaoImpl();
         List<Driver> otherDrivers = driverDao.findAll();
         List<Driver> busDrivers = driverDao.findByBus(bus);
         otherDrivers.removeAll(busDrivers);
 
         context.setVariable("bus", bus);
-        context.setVariable("routes", routes);
+        context.setVariable("otherRoutes", otherRoutes);
         context.setVariable("busDrivers", busDrivers);
         context.setVariable("otherDrivers", otherDrivers);
         templateEngine.process("busassignment", context, response.getWriter());
