@@ -46,17 +46,23 @@ public class BusAssignmentServlet extends HttpServlet {
                           HttpServletResponse response)
             throws IOException {
         WebContext context = getWebContext(request, response);
-        String action = request.getParameter("action");
-        long busId = Long.parseLong(request.getParameter("busId"));
+        /*busId passed as parameter from home.html and forwarded as request attribute
+         * from BusAddServlet*/
+        String action = request.getParameter("action") == null
+                ? (String) request.getAttribute("action") : request.getParameter("action");
+        long busId = request.getParameter("busId") == null
+                ? (long) request.getAttribute("busId") : Long.parseLong(request.getParameter("busId"));
         BusDaoImpl busDao = new BusDaoImpl();
-        Bus bus = busDao.findById(busId);
+        RouteDaoImpl routeDao = new RouteDaoImpl();
         DriverDaoImpl driverDao = new DriverDaoImpl();
+        Bus bus = busDao.findById(busId);
         switch (action) {
+            case "busSelect" -> {
+            }
             case "routeAssign" -> {
                 long routeId = Long.parseLong(request.getParameter("selectedRoute"));
-                RouteDaoImpl routeDao = new RouteDaoImpl();
-                Route route = routeDao.findById(routeId);
-                bus.setRoute(route);
+                Route busRoute = routeDao.findById(routeId);
+                bus.setRoute(busRoute);
                 busDao.update(bus);
             }
             case "driverAssign" -> {
@@ -71,14 +77,17 @@ public class BusAssignmentServlet extends HttpServlet {
             }
         }
 
+        List<Route> otherRoutes = routeDao.findAll();
+        Route busRoute = routeDao.findByBus(bus);
+        otherRoutes.remove(busRoute);
         List<Driver> otherDrivers = driverDao.findAll();
         List<Driver> busDrivers = driverDao.findByBus(bus);
         otherDrivers.removeAll(busDrivers);
 
         context.setVariable("bus", bus);
-        context.setVariable("busDrivers", busDrivers);
+        context.setVariable("otherRoutes", otherRoutes);
+        context.setVariable("busDrivers", bus.getDrivers());
         context.setVariable("otherDrivers", otherDrivers);
-
         templateEngine.process("busassignment", context, response.getWriter());
         response.setContentType("text/html;charset=UTF-8");
     }

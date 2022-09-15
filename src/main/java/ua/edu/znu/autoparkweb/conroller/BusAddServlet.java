@@ -56,8 +56,9 @@ public class BusAddServlet extends HttpServlet {
         bus.setRoute(emptyRoute);
         busDao.create(bus);
         bus = busDao.findByNumber(busNumber);
-        getServletContext().getRequestDispatcher("/SelectedBusServlet?busId=" + bus.getId())
-                .forward(request, response);
+        request.setAttribute("busId", bus.getId());
+        request.setAttribute("action","busAdd");
+        request.getRequestDispatcher("/BusAssignmentServlet").forward(request, response);
     }
 
     private WebContext getWebContext(HttpServletRequest request, HttpServletResponse response) {
