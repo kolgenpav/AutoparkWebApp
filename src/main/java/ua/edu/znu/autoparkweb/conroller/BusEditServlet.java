@@ -41,7 +41,6 @@ public class BusEditServlet extends HttpServlet {
                           HttpServletResponse response)
             throws IOException {
         WebContext context = getWebContext(request, response);
-
         BusDaoImpl busDao = new BusDaoImpl();
         long busId = Long.parseLong(request.getParameter("busId"));
         Bus bus = busDao.findById(busId);

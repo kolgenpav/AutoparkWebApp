@@ -24,7 +24,7 @@
                     <td th:utext="${bus.id}">busId</td>
                     <td th:utext="${bus.number}">busNumber</td>
                     <td>
-                        <form th:action="@{/BusEditServlet}" method="POST">
+                        <form th:action="@{/BusEditServlet}" method="post">
                             <input type="hidden" name="action"
                                    value="busEdit"/>
                             <input type="hidden" name="busId"
@@ -33,7 +33,7 @@
                         </form>
                     </td>
                     <td>
-                        <form th:action="@{/BusesServlet}" method="POST">
+                        <form th:action="@{/BusesServlet}" method="post">
                             <input type="hidden" name="action"
                                    value="busRemove"/>
                             <input type="hidden" name="busId"
