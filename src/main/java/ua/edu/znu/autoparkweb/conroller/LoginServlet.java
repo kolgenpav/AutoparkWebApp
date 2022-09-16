@@ -47,25 +47,30 @@ public class LoginServlet extends HttpServlet {
         String action = request.getParameter("action");
         String messageText;
         String nextUrl;
-        try {
-            UserDaoImpl userDao = new UserDaoImpl();
-            if (userDao.isAuthenticated(username, password)) {
-//        if (isAuthenticated(username, password)) {
-                messageText = "Hello " + username + "!";
-                nextUrl = "home";
-                request.setAttribute("message", messageText);
-                request.getRequestDispatcher("HomeServlet").forward(request, response);
-            } else {
-                messageText = "Authentication failed!";
-                nextUrl = "login";
-            }
-        } catch (NoResultException ex) {
-            messageText = "No such username!";
+        if (action.equals("logout")) {
+//            session.invalidate();
             nextUrl = "login";
-        } catch (ServletException e) {
-            throw new RuntimeException(e);
+        } else {
+            try {
+                UserDaoImpl userDao = new UserDaoImpl();
+                if (userDao.isAuthenticated(username, password)) {
+//        if (isAuthenticated(username, password)) {
+                    messageText = "Hello, " + username + "!";
+                    nextUrl = "home";
+                    request.setAttribute("message", messageText);
+                    request.getRequestDispatcher("HomeServlet").forward(request, response);
+                } else {
+                    messageText = "Authentication failed!";
+                    nextUrl = "login";
+                }
+            } catch (NoResultException ex) {
+                messageText = "No such username!";
+                nextUrl = "login";
+            } catch (ServletException e) {
+                throw new RuntimeException(e);
+            }
+            context.setVariable("message", messageText);
         }
-        context.setVariable("message", messageText);
         templateEngine.process(nextUrl, context, response.getWriter());
         response.setContentType("text/html;charset=UTF-8");
     }
@@ -85,10 +90,5 @@ public class LoginServlet extends HttpServlet {
      */
     private boolean isAuthenticated(String username, String password) {
         return "foo".equalsIgnoreCase(username) && "bar".equalsIgnoreCase(password);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Servlet that processes user login.";
     }
 }
