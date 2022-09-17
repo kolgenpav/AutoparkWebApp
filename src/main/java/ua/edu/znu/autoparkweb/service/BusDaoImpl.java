@@ -23,12 +23,4 @@ public class BusDaoImpl extends AutoparkDaoImpl<Bus> {
                 .setParameter("number", number);
         return getSingleResult(query);
     }
-
-    public List<Bus> findByRoute(final Route route) {
-        EntityManager entityManager = getEntityManager();
-        TypedQuery<Bus> query = entityManager
-                .createQuery("from Bus b where b.route=:route", Bus.class)
-                .setParameter("route", route);
-        return getResultList(query);
-    }
 }

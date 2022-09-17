@@ -23,14 +23,6 @@ public class RouteDaoImpl extends AutoparkDaoImpl<Route> {
         return getSingleResult(query);
     }
 
-    public List<Route> findByNamePattern(final String routeNamePattern) {
-        EntityManager entityManager = getEntityManager();
-        TypedQuery<Route> query = entityManager
-                .createQuery("from Route r where r.name=:routeName", Route.class)
-                .setParameter("routeName", "%" + routeNamePattern + "%");
-        return getResultList(query);
-    }
-
     public Route findByBus(final Bus bus) {
         EntityManager entityManager = getEntityManager();
         TypedQuery<Route> query = entityManager

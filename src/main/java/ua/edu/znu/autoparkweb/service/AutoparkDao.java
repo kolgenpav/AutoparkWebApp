@@ -4,7 +4,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * Interface with universal methods that working with entities
+ * Interface with universal methods that working with all entities
  * of Autopark database.
  */
 public interface AutoparkDao<T> {
@@ -24,6 +24,4 @@ public interface AutoparkDao<T> {
     void update(final T entity);
 
     void delete(final T entity);
-
-    void deleteById(final long entityId);
 }

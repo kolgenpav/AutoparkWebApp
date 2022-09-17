@@ -8,7 +8,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * Universal methods that working with entities of Autopark database.
+ * Universal methods that working with all entities of Autopark database.
  *
  * @param <T> entity type
  */
@@ -29,7 +29,6 @@ public abstract class AutoparkDaoImpl<T> implements AutoparkDao<T> {
         return entityManager.find(clazz, id);
     }
 
-    @SuppressWarnings("unchecked")
     public List<T> findAll() {
         EntityManager entityManager = getEntityManager();
         return entityManager.createQuery("from " + clazz.getName()).getResultList();
@@ -68,7 +67,7 @@ public abstract class AutoparkDaoImpl<T> implements AutoparkDao<T> {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            /*To org.hibernate.PersistentObjectException: detached entity passed to persist avoid*/
+            /*To avoid org.hibernate.PersistentObjectException: detached entity passed to persist method*/
             entityManager.persist(entityManager.contains(entity) ? entity : entityManager.merge(entity));
             transaction.commit();
         } catch (Exception ex) {
@@ -99,7 +98,7 @@ public abstract class AutoparkDaoImpl<T> implements AutoparkDao<T> {
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();
-            /*To IllegalArgumentException: Removing a detached instance avoid*/
+            /*To avoid IllegalArgumentException: Removing a detached instance*/
             entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
             transaction.commit();
         }catch (Exception ex){
@@ -108,10 +107,5 @@ public abstract class AutoparkDaoImpl<T> implements AutoparkDao<T> {
         }finally {
             entityManager.close();
         }
-    }
-
-    public void deleteById(final long entityId) {
-        final T entity = findById(entityId);
-        delete(entity);
     }
 }
