@@ -15,7 +15,7 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
  */
 @WebListener
 public class ThymeleafConfiguration implements ServletContextListener {
-    public static final String TEMPLATE_ENGINE_ATR = "ua.edu.znu.servletstudy.TemplateEngineInstance";
+    public static final String TEMPLATE_ENGINE_ATR = "ua.edu.znu.autoparkweb.TemplateEngineInstance";
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
