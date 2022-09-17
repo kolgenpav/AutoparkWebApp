@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * DTO for busassignment.html,
- * used in the {@link ua.edu.znu.autoparkweb.conroller.BusAssignmentServlet}.
+ * used in the {@link ua.edu.znu.autoparkweb.conroller.HomeServlet}.
  */
 @Data
 public class BusAssignment {

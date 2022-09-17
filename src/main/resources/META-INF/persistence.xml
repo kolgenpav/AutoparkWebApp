@@ -5,7 +5,7 @@
     <persistence-unit name="autoparkPU"
                       transaction-type="RESOURCE_LOCAL">
         <description>
-            Persistence unit for the JPA-Hibernate tutorial
+            Persistence unit for the Autopark Web Application
         </description>
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>ua.edu.znu.autoparkweb.model.Bus</class>
