@@ -26,7 +26,7 @@
                     <td th:utext="${route.name}">routeName</td>
                     <td th:utext="${route.number}">routeNumber</td>
                     <td>
-                        <form th:action="@{/RouteEditServlet}" method="POST">
+                        <form th:action="@{/RouteEditServlet}" method="post">
                             <input type="hidden" name="action"
                                    value="routeEdit"/>
                             <input type="hidden" name="routeId"
@@ -35,7 +35,7 @@
                         </form>
                     </td>
                     <td>
-                        <form th:action="@{/RoutesServlet}" method="POST">
+                        <form th:action="@{/RoutesServlet}" method="post">
                             <input type="hidden" name="action"
                                    value="routeRemove"/>
                             <input type="hidden" name="routeId"

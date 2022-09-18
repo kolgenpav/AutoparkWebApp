@@ -19,8 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Populates routes.html with current list of routes in the doGet.
- * Performs route edit and route remove in the doPost.
+ * Provides operations with Route directory.
  */
 @WebServlet("/RoutesServlet")
 public class RoutesServlet extends HttpServlet {
@@ -84,10 +83,5 @@ public class RoutesServlet extends HttpServlet {
         IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())
                 .buildExchange(request, response);
         return new WebContext(webExchange);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "The start point for the authenticated user.";
     }
 }

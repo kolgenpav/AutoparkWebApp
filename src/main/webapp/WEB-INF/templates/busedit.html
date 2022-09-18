@@ -12,7 +12,7 @@
         <div th:insert="fragments/header :: header"></div>
 
         <div class="addeditentity">
-            <form th:action="@{/BusesServlet}" method="POST">
+            <form th:action="@{/BusesServlet}" method="post">
                 <input type="hidden" name="action"
                        value="busEdit"/>
                 <label for="busId">Bus Id:</label><br>

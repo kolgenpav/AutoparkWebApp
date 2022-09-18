@@ -19,8 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Populates buses.html with current list of buses in the doGet.
- * Performs bus edit and bus remove in the doPost.
+ * Provides operations with Bus directory.
  */
 @WebServlet("/BusesServlet")
 public class BusesServlet extends HttpServlet {
@@ -78,10 +77,5 @@ public class BusesServlet extends HttpServlet {
         IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())
                 .buildExchange(request, response);
         return new WebContext(webExchange);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "The start point for the authenticated user.";
     }
 }
