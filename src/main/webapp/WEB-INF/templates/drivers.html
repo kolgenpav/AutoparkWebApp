@@ -28,7 +28,7 @@
                     <td th:utext="${driver.surname}">driverSurname</td>
                     <td th:utext="${driver.age}">driverAge</td>
                     <td>
-                        <form th:action="@{/DriverEditServlet}" method="POST">
+                        <form th:action="@{/DriverEditServlet}" method="post">
                             <input type="hidden" name="action"
                                    value="driverEdit"/>
                             <input type="hidden" name="driverId"
@@ -37,7 +37,7 @@
                         </form>
                     </td>
                     <td>
-                        <form th:action="@{/DriversServlet}" method="POST">
+                        <form th:action="@{/DriversServlet}" method="post">
                             <input type="hidden" name="action"
                                    value="driverRemove"/>
                             <input type="hidden" name="driverId"

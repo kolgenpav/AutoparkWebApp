@@ -54,9 +54,4 @@ public class DriverEditServlet extends HttpServlet {
                 .buildExchange(request, response);
         return new WebContext(webExchange);
     }
-
-    @Override
-    public String getServletInfo() {
-        return "The start point for the authenticated user.";
-    }
 }

@@ -19,8 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Populates drivers.html with current list of drivers in the doGet.
- * Performs driver edit and driver remove in the doPost.
+ * Provides operations with Driver directory.
  */
 @WebServlet("/DriversServlet")
 public class DriversServlet extends HttpServlet {
@@ -82,10 +81,5 @@ public class DriversServlet extends HttpServlet {
         IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())
                 .buildExchange(request, response);
         return new WebContext(webExchange);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "The start point for the authenticated user.";
     }
 }
