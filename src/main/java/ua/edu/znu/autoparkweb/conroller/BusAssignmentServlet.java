@@ -46,7 +46,7 @@ public class BusAssignmentServlet extends HttpServlet {
                           HttpServletResponse response)
             throws IOException {
         WebContext context = getWebContext(request, response);
-        /*busId passed as parameter from home.html and forwarded as request attribute
+        /* busId passed as parameter from home.html and forwarded as request attribute
          * from BusAddServlet*/
         String action = request.getParameter("action") == null
                 ? (String) request.getAttribute("action") : request.getParameter("action");
@@ -96,10 +96,5 @@ public class BusAssignmentServlet extends HttpServlet {
         IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())
                 .buildExchange(request, response);
         return new WebContext(webExchange);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "The start point for the authenticated user.";
     }
 }
