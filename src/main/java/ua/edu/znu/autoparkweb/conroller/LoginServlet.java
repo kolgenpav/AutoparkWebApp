@@ -1,15 +1,18 @@
 package ua.edu.znu.autoparkweb.conroller;
 
 import jakarta.servlet.ServletConfig;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.IWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
+import ua.edu.znu.autoparkweb.model.User;
 import ua.edu.znu.autoparkweb.service.UserDaoImpl;
 
 import javax.persistence.NoResultException;
@@ -42,32 +45,37 @@ public class LoginServlet extends HttpServlet {
                           HttpServletResponse response)
             throws IOException {
         WebContext context = getWebContext(request, response);
+        HttpSession session = request.getSession();
+        String sessionID = session.getId();
+        System.out.println("LoginServlet: sessionID: " + sessionID);
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String action = request.getParameter("action");
-        String messageText;
-        String nextUrl;
-        if (action.equals("logout")) {
-//            session.invalidate();
+        String messageText = null;
+        String nextUrl = null;
+        if (action == null || action.equals("logout")) {
+            session.invalidate();
             nextUrl = "login";
         } else {
             try {
-                UserDaoImpl userDao = new UserDaoImpl();
-                if (userDao.isAuthenticated(username, password)) {
-//        if (isAuthenticated(username, password)) {
+                UserDaoImpl userDao = (UserDaoImpl) getServletContext().getAttribute("userDao");
+                User user = userDao.findByUsername(username);
+                if (user != null && user.getUsername().equals(username)
+                        && user.getPassword().equals(password)) {
+                    session.setAttribute("user", user);
                     messageText = "Hello, " + username + "!";
-                    nextUrl = "home";
                     request.setAttribute("message", messageText);
                     request.getRequestDispatcher("HomeServlet").forward(request, response);
                 } else {
-                    messageText = "Authentication failed!";
+                    if (user == null) {
+                        messageText = "No such username!";
+                    } else {
+                        messageText = "Authentication failed!";
+                    }
                     nextUrl = "login";
                 }
-            } catch (NoResultException ex) {
-                messageText = "No such username!";
-                nextUrl = "login";
             } catch (ServletException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
             context.setVariable("message", messageText);
         }

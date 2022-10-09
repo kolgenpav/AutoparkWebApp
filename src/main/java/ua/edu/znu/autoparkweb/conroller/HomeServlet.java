@@ -13,12 +13,11 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import ua.edu.znu.autoparkweb.model.Bus;
 import ua.edu.znu.autoparkweb.model.Driver;
 import ua.edu.znu.autoparkweb.model.dto.BusAssignment;
-import ua.edu.znu.autoparkweb.service.BusDaoImpl;
-import ua.edu.znu.autoparkweb.service.DriverDaoImpl;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * The start point for the authenticated user.
@@ -45,8 +44,7 @@ public class HomeServlet extends HttpServlet {
             throws IOException {
         String message = (String) request.getAttribute("message");
         WebContext context = getWebContext(request, response);
-        BusDaoImpl busDao = new BusDaoImpl();
-        List<Bus> buses = busDao.findAll();
+        List<Bus> buses = (List<Bus>) getServletContext().getAttribute("buses");
         List<BusAssignment> busAssignments = new ArrayList<>();
         for (Bus bus : buses) {
             BusAssignment busAssignment = new BusAssignment();
@@ -55,8 +53,8 @@ public class HomeServlet extends HttpServlet {
             busAssignment.setRouteNumber(bus.getRoute().getNumber());
             busAssignment.setRouteName(bus.getRoute().getName());
             StringBuilder driversInfo = new StringBuilder();
-            DriverDaoImpl driverDao = new DriverDaoImpl();
-            List<Driver> busDrivers = driverDao.findByBus(bus);
+//            DriverDaoImpl driverDao = (DriverDaoImpl) getServletContext().getAttribute("driverDao");
+            Set<Driver> busDrivers = bus.getDrivers();
             for (Driver driver : busDrivers) {
                 driversInfo.append(driver.getSurname())
                         .append(" ")
