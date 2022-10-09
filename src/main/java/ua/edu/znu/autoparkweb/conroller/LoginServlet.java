@@ -1,7 +1,6 @@
 package ua.edu.znu.autoparkweb.conroller;
 
 import jakarta.servlet.ServletConfig;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -15,7 +14,6 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import ua.edu.znu.autoparkweb.model.User;
 import ua.edu.znu.autoparkweb.service.UserDaoImpl;
 
-import javax.persistence.NoResultException;
 import java.io.IOException;
 
 /**
@@ -52,10 +50,8 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         String action = request.getParameter("action");
         String messageText = null;
-        String nextUrl = null;
         if (action == null || action.equals("logout")) {
             session.invalidate();
-            nextUrl = "login";
         } else {
             try {
                 UserDaoImpl userDao = (UserDaoImpl) getServletContext().getAttribute("userDao");
@@ -72,14 +68,13 @@ public class LoginServlet extends HttpServlet {
                     } else {
                         messageText = "Authentication failed!";
                     }
-                    nextUrl = "login";
                 }
             } catch (ServletException e) {
                 e.printStackTrace();
             }
             context.setVariable("message", messageText);
         }
-        templateEngine.process(nextUrl, context, response.getWriter());
+        templateEngine.process("login", context, response.getWriter());
         response.setContentType("text/html;charset=UTF-8");
     }
 
@@ -87,16 +82,5 @@ public class LoginServlet extends HttpServlet {
         IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())
                 .buildExchange(request, response);
         return new WebContext(webExchange);
-    }
-
-    /**
-     * Authenticates user - for initial version without database users table.
-     *
-     * @param username username
-     * @param password password
-     * @return is user authenticated
-     */
-    private boolean isAuthenticated(String username, String password) {
-        return "foo".equalsIgnoreCase(username) && "bar".equalsIgnoreCase(password);
     }
 }

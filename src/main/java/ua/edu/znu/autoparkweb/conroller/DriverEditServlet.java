@@ -30,18 +30,11 @@ public class DriverEditServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
-            throws IOException {
-        doPost(request, response);
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws IOException {
         WebContext context = getWebContext(request, response);
-        DriverDaoImpl driverDao = new DriverDaoImpl();
+        DriverDaoImpl driverDao = (DriverDaoImpl) getServletContext().getAttribute("driverDao");
         long driverId = Long.parseLong(request.getParameter("driverId"));
         Driver driver = driverDao.findById(driverId);
         context.setVariable("driver", driver);

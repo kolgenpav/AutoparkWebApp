@@ -43,11 +43,11 @@ public class BusAddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws IOException, ServletException {
-        BusDaoImpl busDao = new BusDaoImpl();
+        BusDaoImpl busDao = (BusDaoImpl) getServletContext().getAttribute("busDao");
         Bus bus = new Bus();
         String busNumber = request.getParameter("busNumber");
         bus.setNumber(busNumber);
-        RouteDaoImpl routeDao = new RouteDaoImpl();
+        RouteDaoImpl routeDao = (RouteDaoImpl) getServletContext().getAttribute("routeDao");
         Route emptyRoute = routeDao.findByNumber(-1);
         if (emptyRoute == null) {
             emptyRoute = Route.getEmptyRoute();

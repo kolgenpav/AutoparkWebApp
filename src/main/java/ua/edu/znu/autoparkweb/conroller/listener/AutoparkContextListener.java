@@ -16,7 +16,7 @@ public class AutoparkContextListener implements ServletContextListener {
     private BusDaoImpl busDao;
     private DriverDaoImpl driverDao;
     private RouteDaoImpl routeDao;
-    private List<Bus> buses;
+
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ServletContextListener.super.contextInitialized(sce);
@@ -24,13 +24,13 @@ public class AutoparkContextListener implements ServletContextListener {
         busDao = new BusDaoImpl();
         driverDao = new DriverDaoImpl();
         routeDao = new RouteDaoImpl();
-        buses = busDao.findAll();
+//        List<Bus> buses = busDao.findAll();
         ServletContext app = sce.getServletContext();
         app.setAttribute("userDao", userDao);
         app.setAttribute("busDao", busDao);
         app.setAttribute("driverDao", driverDao);
         app.setAttribute("routeDao", routeDao);
-        app.setAttribute("buses", buses);
+//        app.setAttribute("buses", buses);
     }
 
     @Override

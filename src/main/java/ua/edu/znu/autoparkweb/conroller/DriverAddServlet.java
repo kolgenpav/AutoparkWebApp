@@ -41,7 +41,7 @@ public class DriverAddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws IOException, ServletException {
-        DriverDaoImpl driverDao = new DriverDaoImpl();
+        DriverDaoImpl driverDao = (DriverDaoImpl) getServletContext().getAttribute("driverDao");
         Driver driver = new Driver();
         String driverName = request.getParameter("driverName");
         driver.setName(driverName);

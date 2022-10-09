@@ -37,7 +37,7 @@ public class BusesServlet extends HttpServlet {
                          HttpServletResponse response)
             throws IOException {
         WebContext context = getWebContext(request, response);
-        BusDaoImpl busDao = new BusDaoImpl();
+        BusDaoImpl busDao = (BusDaoImpl) getServletContext().getAttribute("busDao");
         List<Bus> buses = busDao.findAll();
 
         context.setVariable("buses", buses);
@@ -50,7 +50,7 @@ public class BusesServlet extends HttpServlet {
                           HttpServletResponse response)
             throws IOException {
         String action = request.getParameter("action");
-        BusDaoImpl busDao = new BusDaoImpl();
+        BusDaoImpl busDao = (BusDaoImpl) getServletContext().getAttribute("busDao");
         long busId = Long.parseLong(request.getParameter("busId"));
         Bus bus = busDao.findById(busId);
         switch (action) {
@@ -60,7 +60,7 @@ public class BusesServlet extends HttpServlet {
                 busDao.update(bus);
             }
             case "busRemove" -> {
-                DriverDaoImpl driverDao = new DriverDaoImpl();
+                DriverDaoImpl driverDao = (DriverDaoImpl) getServletContext().getAttribute("driverDao");
                 /*You need delete the bus's drivers first due to bidirectional many-to-many association */
                 for (Driver driver : bus.getDrivers()) {
                     driver.getBuses().remove(bus);

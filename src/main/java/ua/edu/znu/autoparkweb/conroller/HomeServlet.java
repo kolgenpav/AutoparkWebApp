@@ -13,6 +13,7 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import ua.edu.znu.autoparkweb.model.Bus;
 import ua.edu.znu.autoparkweb.model.Driver;
 import ua.edu.znu.autoparkweb.model.dto.BusAssignment;
+import ua.edu.znu.autoparkweb.service.BusDaoImpl;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,7 +45,8 @@ public class HomeServlet extends HttpServlet {
             throws IOException {
         String message = (String) request.getAttribute("message");
         WebContext context = getWebContext(request, response);
-        List<Bus> buses = (List<Bus>) getServletContext().getAttribute("buses");
+        BusDaoImpl busDao = (BusDaoImpl) getServletContext().getAttribute("busDao");
+        List<Bus> buses = busDao.findAll();
         List<BusAssignment> busAssignments = new ArrayList<>();
         for (Bus bus : buses) {
             BusAssignment busAssignment = new BusAssignment();
@@ -53,7 +55,6 @@ public class HomeServlet extends HttpServlet {
             busAssignment.setRouteNumber(bus.getRoute().getNumber());
             busAssignment.setRouteName(bus.getRoute().getName());
             StringBuilder driversInfo = new StringBuilder();
-//            DriverDaoImpl driverDao = (DriverDaoImpl) getServletContext().getAttribute("driverDao");
             Set<Driver> busDrivers = bus.getDrivers();
             for (Driver driver : busDrivers) {
                 driversInfo.append(driver.getSurname())

@@ -41,7 +41,7 @@ public class RouteAddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws IOException, ServletException {
-        RouteDaoImpl routeDao = new RouteDaoImpl();
+        RouteDaoImpl routeDao = (RouteDaoImpl) getServletContext().getAttribute("routeDao");
         Route route = new Route();
         String routeName = request.getParameter("routeName");
         route.setName(routeName);

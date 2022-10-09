@@ -35,13 +35,6 @@ public class BusAssignmentServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
-            throws IOException {
-        doPost(request, response);
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws IOException {
@@ -52,9 +45,9 @@ public class BusAssignmentServlet extends HttpServlet {
                 ? (String) request.getAttribute("action") : request.getParameter("action");
         long busId = request.getParameter("busId") == null
                 ? (long) request.getAttribute("busId") : Long.parseLong(request.getParameter("busId"));
-        BusDaoImpl busDao = new BusDaoImpl();
-        RouteDaoImpl routeDao = new RouteDaoImpl();
-        DriverDaoImpl driverDao = new DriverDaoImpl();
+        BusDaoImpl busDao = (BusDaoImpl) getServletContext().getAttribute("busDao");
+        RouteDaoImpl routeDao = (RouteDaoImpl) getServletContext().getAttribute("routeDao");
+        DriverDaoImpl driverDao = (DriverDaoImpl) getServletContext().getAttribute("driverDao");
         Bus bus = busDao.findById(busId);
         switch (action) {
             case "busSelect" -> {

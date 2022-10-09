@@ -15,7 +15,9 @@ import ua.edu.znu.autoparkweb.model.User;
 
 import java.io.IOException;
 
-@WebFilter(urlPatterns = "/HomeServlet", dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.REQUEST})
+@WebFilter(urlPatterns = {"/HomeServlet", "/BusesServlet", "/BusAddServlet",
+        "/RoutesServlet", "/RouteAddServlet", "/DriversServlet", "/DriverAddServlet"},
+        dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.REQUEST})
 public class AuthFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {

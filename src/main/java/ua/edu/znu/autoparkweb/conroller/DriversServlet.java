@@ -37,7 +37,7 @@ public class DriversServlet extends HttpServlet {
                          HttpServletResponse response)
             throws IOException {
         WebContext context = getWebContext(request, response);
-        DriverDaoImpl driverDao = new DriverDaoImpl();
+        DriverDaoImpl driverDao = (DriverDaoImpl) getServletContext().getAttribute("driverDao");
         List<Driver> drivers = driverDao.findAll();
 
         context.setVariable("drivers", drivers);
@@ -50,7 +50,7 @@ public class DriversServlet extends HttpServlet {
                           HttpServletResponse response)
             throws IOException {
         String action = request.getParameter("action");
-        DriverDaoImpl driverDao = new DriverDaoImpl();
+        DriverDaoImpl driverDao = (DriverDaoImpl) getServletContext().getAttribute("driverDao");
         long driverId = Long.parseLong(request.getParameter("driverId"));
         Driver driver = driverDao.findById(driverId);
         switch (action) {
@@ -64,7 +64,7 @@ public class DriversServlet extends HttpServlet {
                 driverDao.update(driver);
             }
             case "driverRemove" -> {
-                BusDaoImpl busDao = new BusDaoImpl();
+                BusDaoImpl busDao = (BusDaoImpl) getServletContext().getAttribute("busDao");
                 /*You need to remove driver's buses first*/
                 for (Bus bus : driver.getBuses()) {
                     bus.getDrivers().remove(driver);

@@ -30,18 +30,11 @@ public class RouteEditServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
-            throws IOException {
-        doPost(request, response);
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws IOException {
         WebContext context = getWebContext(request, response);
-        RouteDaoImpl routeDao = new RouteDaoImpl();
+        RouteDaoImpl routeDao = (RouteDaoImpl) getServletContext().getAttribute("routeDao");
         long routeId = Long.parseLong(request.getParameter("routeId"));
         Route route = routeDao.findById(routeId);
         context.setVariable("route", route);

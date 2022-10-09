@@ -30,18 +30,11 @@ public class BusEditServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
-            throws IOException {
-        doPost(request, response);
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws IOException {
         WebContext context = getWebContext(request, response);
-        BusDaoImpl busDao = new BusDaoImpl();
+        BusDaoImpl busDao = (BusDaoImpl) getServletContext().getAttribute("busDao");
         long busId = Long.parseLong(request.getParameter("busId"));
         Bus bus = busDao.findById(busId);
         context.setVariable("bus", bus);

@@ -37,7 +37,7 @@ public class RoutesServlet extends HttpServlet {
                          HttpServletResponse response)
             throws IOException {
         WebContext context = getWebContext(request, response);
-        RouteDaoImpl routeDao = new RouteDaoImpl();
+        RouteDaoImpl routeDao = (RouteDaoImpl) getServletContext().getAttribute("routeDao");
         List<Route> routes = routeDao.findAll();
 
         context.setVariable("routes", routes);
@@ -50,7 +50,7 @@ public class RoutesServlet extends HttpServlet {
                           HttpServletResponse response)
             throws IOException {
         String action = request.getParameter("action");
-        RouteDaoImpl routeDao = new RouteDaoImpl();
+        RouteDaoImpl routeDao = (RouteDaoImpl) getServletContext().getAttribute("routeDao");
         long routeId = Long.parseLong(request.getParameter("routeId"));
         Route route = routeDao.findById(routeId);
         switch (action) {
@@ -62,7 +62,7 @@ public class RoutesServlet extends HttpServlet {
                 routeDao.update(route);
             }
             case "routeRemove" -> {
-                BusDaoImpl busDao = new BusDaoImpl();
+                BusDaoImpl busDao = (BusDaoImpl) getServletContext().getAttribute("busDao");
                 /*You need to set emptyRoute for the route's busses first*/
                 Route emptyRoute = routeDao.findByNumber(-1);
                 if(emptyRoute == null){
