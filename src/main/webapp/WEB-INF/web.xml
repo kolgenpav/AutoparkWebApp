@@ -11,9 +11,9 @@
         <welcome-file>/WEB-INF/templates/login.html</welcome-file>
     </welcome-file-list>
 
-    <listener>
-        <listener-class>ua.edu.znu.autoparkweb.conroller.listener.AutoparkContextListener</listener-class>
-    </listener>
+<!--    <listener>-->
+<!--        <listener-class>ua.edu.znu.autoparkweb.conroller.listener.AutoparkContextListener</listener-class>-->
+<!--    </listener>-->
 
 <!--    <filter>-->
 <!--        <filter-name>AuthFilter</filter-name>-->
