@@ -10,6 +10,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 import org.thymeleaf.web.IWebExchange;
 import org.thymeleaf.web.servlet.JakartaServletWebApplication;
+import ua.edu.znu.autoparkweb.conroller.listener.ThymeleafConfigurationListener;
 import ua.edu.znu.autoparkweb.model.User;
 import ua.edu.znu.autoparkweb.service.UserDaoImpl;
 
@@ -28,7 +29,7 @@ public class RegistrationServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         this.templateEngine = (TemplateEngine) getServletContext()
-                .getAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATR);
+                .getAttribute(ThymeleafConfigurationListener.TEMPLATE_ENGINE_ATR);
     }
 
     @Override

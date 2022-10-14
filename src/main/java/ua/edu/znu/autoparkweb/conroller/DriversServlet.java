@@ -6,10 +6,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.web.IWebExchange;
-import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import ua.edu.znu.autoparkweb.model.Bus;
 import ua.edu.znu.autoparkweb.model.Driver;
 import ua.edu.znu.autoparkweb.service.BusDaoImpl;
@@ -23,25 +19,20 @@ import java.util.List;
  */
 @WebServlet("/DriversServlet")
 public class DriversServlet extends HttpServlet {
-    private TemplateEngine templateEngine;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        this.templateEngine = (TemplateEngine) getServletContext()
-                .getAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATR);
     }
 
     @Override
     protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
-            throws IOException {
-        WebContext context = getWebContext(request, response);
+                         HttpServletResponse response) {
         DriverDaoImpl driverDao = (DriverDaoImpl) getServletContext().getAttribute("driverDao");
         List<Driver> drivers = driverDao.findAll();
-
-        context.setVariable("drivers", drivers);
-        templateEngine.process("drivers", context, response.getWriter());
+        String nextUrl = "routes";
+        request.setAttribute("drivers", drivers);
+        request.setAttribute("nextUrl", nextUrl);
         response.setContentType("text/html;charset=UTF-8");
     }
 
@@ -73,13 +64,9 @@ public class DriversServlet extends HttpServlet {
                 driverDao.delete(driver);
             }
         }
+        String nextUrl = "drivers";
+        request.setAttribute("nextUrl", nextUrl);
         /*Make GET request to this servlet*/
         response.sendRedirect(request.getContextPath() + "/DriversServlet");
-}
-
-    private WebContext getWebContext(HttpServletRequest request, HttpServletResponse response) {
-        IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())
-                .buildExchange(request, response);
-        return new WebContext(webExchange);
     }
 }

@@ -6,10 +6,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.web.IWebExchange;
-import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import ua.edu.znu.autoparkweb.model.Bus;
 import ua.edu.znu.autoparkweb.model.Driver;
 import ua.edu.znu.autoparkweb.service.BusDaoImpl;
@@ -23,25 +19,20 @@ import java.util.List;
  */
 @WebServlet("/BusesServlet")
 public class BusesServlet extends HttpServlet {
-    private TemplateEngine templateEngine;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        this.templateEngine = (TemplateEngine) getServletContext()
-                .getAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATR);
     }
 
     @Override
     protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
-            throws IOException {
-        WebContext context = getWebContext(request, response);
+                         HttpServletResponse response) {
         BusDaoImpl busDao = (BusDaoImpl) getServletContext().getAttribute("busDao");
         List<Bus> buses = busDao.findAll();
-
-        context.setVariable("buses", buses);
-        templateEngine.process("buses", context, response.getWriter());
+        String nextUrl = "buses";
+        request.setAttribute("buses", buses);
+        request.setAttribute("nextUrl", nextUrl);
         response.setContentType("text/html;charset=UTF-8");
     }
 
@@ -69,13 +60,9 @@ public class BusesServlet extends HttpServlet {
                 busDao.delete(bus);
             }
         }
+        String nextUrl = "buses";
+        request.setAttribute("nextUrl", nextUrl);
         /*Make GET request to this servlet*/
         response.sendRedirect(request.getContextPath() + "/BusesServlet");
-}
-
-    private WebContext getWebContext(HttpServletRequest request, HttpServletResponse response) {
-        IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())
-                .buildExchange(request, response);
-        return new WebContext(webExchange);
     }
 }

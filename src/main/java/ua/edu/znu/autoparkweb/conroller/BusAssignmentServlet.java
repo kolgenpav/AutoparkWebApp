@@ -6,10 +6,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.web.IWebExchange;
-import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import ua.edu.znu.autoparkweb.model.Bus;
 import ua.edu.znu.autoparkweb.model.Driver;
 import ua.edu.znu.autoparkweb.model.Route;
@@ -25,20 +21,16 @@ import java.util.List;
  */
 @WebServlet("/BusAssignmentServlet")
 public class BusAssignmentServlet extends HttpServlet {
-    private TemplateEngine templateEngine;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        this.templateEngine = (TemplateEngine) getServletContext()
-                .getAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATR);
     }
 
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws IOException {
-        WebContext context = getWebContext(request, response);
         /* busId passed as parameter from home.html and forwarded as request attribute
          * from BusAddServlet*/
         String action = request.getParameter("action") == null
@@ -49,6 +41,7 @@ public class BusAssignmentServlet extends HttpServlet {
         RouteDaoImpl routeDao = (RouteDaoImpl) getServletContext().getAttribute("routeDao");
         DriverDaoImpl driverDao = (DriverDaoImpl) getServletContext().getAttribute("driverDao");
         Bus bus = busDao.findById(busId);
+        /*action busAdd doesn't processes*/
         switch (action) {
             case "busSelect" -> {
             }
@@ -77,17 +70,13 @@ public class BusAssignmentServlet extends HttpServlet {
         List<Driver> busDrivers = driverDao.findByBus(bus);
         otherDrivers.removeAll(busDrivers);
 
-        context.setVariable("bus", bus);
-        context.setVariable("otherRoutes", otherRoutes);
-        context.setVariable("busDrivers", bus.getDrivers());
-        context.setVariable("otherDrivers", otherDrivers);
-        templateEngine.process("busassignment", context, response.getWriter());
-        response.setContentType("text/html;charset=UTF-8");
-    }
+        String nextUrl = "busassignment";
+        request.setAttribute("bus", bus);
+        request.setAttribute("otherRoutes", otherRoutes);
+        request.setAttribute("busDrivers", bus.getDrivers());
+        request.setAttribute("otherDrivers", otherDrivers);
+        request.setAttribute("nextUrl", nextUrl);
 
-    private WebContext getWebContext(HttpServletRequest request, HttpServletResponse response) {
-        IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())
-                .buildExchange(request, response);
-        return new WebContext(webExchange);
+        response.setContentType("text/html;charset=UTF-8");
     }
 }

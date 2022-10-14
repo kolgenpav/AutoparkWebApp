@@ -7,10 +7,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.web.IWebExchange;
-import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import ua.edu.znu.autoparkweb.model.User;
 import ua.edu.znu.autoparkweb.service.UserDaoImpl;
 
@@ -22,13 +18,11 @@ import java.io.IOException;
 @WebServlet("/LoginServlet")
 public class LoginServlet extends HttpServlet {
 
-    private TemplateEngine templateEngine;
+//TODO Try @ServletSecurity servlet annotation instead of login form.
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        this.templateEngine = (TemplateEngine) getServletContext()
-                .getAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATR);
     }
 
     @Override
@@ -42,16 +36,19 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws IOException {
-        WebContext context = getWebContext(request, response);
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         String sessionID = session.getId();
         System.out.println("LoginServlet: sessionID: " + sessionID);
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String action = request.getParameter("action");
-        String messageText = null;
+        String message = null;
+        String nextUrl = "login";
         if (action == null || action.equals("logout")) {
             session.invalidate();
+            request.setAttribute("nextUrl", nextUrl);
         } else {
             try {
                 UserDaoImpl userDao = (UserDaoImpl) getServletContext().getAttribute("userDao");
@@ -59,28 +56,19 @@ public class LoginServlet extends HttpServlet {
                 if (user != null && user.getUsername().equals(username)
                         && user.getPassword().equals(password)) {
                     session.setAttribute("user", user);
-                    messageText = "Hello, " + username + "!";
-                    request.setAttribute("message", messageText);
                     request.getRequestDispatcher("HomeServlet").forward(request, response);
                 } else {
                     if (user == null) {
-                        messageText = "No such username!";
+                        message = "No such username!";
                     } else {
-                        messageText = "Authentication failed!";
+                        message = "Authentication failed!";
                     }
                 }
             } catch (ServletException e) {
                 e.printStackTrace();
             }
-            context.setVariable("message", messageText);
+            request.setAttribute("nextUrl", nextUrl);
+            request.setAttribute("message", message);
         }
-        templateEngine.process("login", context, response.getWriter());
-        response.setContentType("text/html;charset=UTF-8");
-    }
-
-    private WebContext getWebContext(HttpServletRequest request, HttpServletResponse response) {
-        IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())
-                .buildExchange(request, response);
-        return new WebContext(webExchange);
     }
 }

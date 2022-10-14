@@ -6,10 +6,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.web.IWebExchange;
-import org.thymeleaf.web.servlet.JakartaServletWebApplication;
 import ua.edu.znu.autoparkweb.model.Bus;
 import ua.edu.znu.autoparkweb.model.Route;
 import ua.edu.znu.autoparkweb.service.BusDaoImpl;
@@ -22,21 +18,17 @@ import java.io.IOException;
  */
 @WebServlet("/BusAddServlet")
 public class BusAddServlet extends HttpServlet {
-    private TemplateEngine templateEngine;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        this.templateEngine = (TemplateEngine) getServletContext()
-                .getAttribute(ThymeleafConfiguration.TEMPLATE_ENGINE_ATR);
     }
 
     @Override
     protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response)
-            throws IOException {
-        WebContext context = getWebContext(request, response);
-        templateEngine.process("busadd", context, response.getWriter());
+                         HttpServletResponse response) {
+        String nextUrl = "busadd";
+        request.setAttribute("nextUrl", nextUrl);
     }
 
     @Override
@@ -55,15 +47,10 @@ public class BusAddServlet extends HttpServlet {
         }
         bus.setRoute(emptyRoute);
         busDao.create(bus);
+        /*Get new bus info with busId*/
         bus = busDao.findByNumber(busNumber);
         request.setAttribute("busId", bus.getId());
-        request.setAttribute("action","busAdd");
+        request.setAttribute("action", "busAdd");
         request.getRequestDispatcher("/BusAssignmentServlet").forward(request, response);
-    }
-
-    private WebContext getWebContext(HttpServletRequest request, HttpServletResponse response) {
-        IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())
-                .buildExchange(request, response);
-        return new WebContext(webExchange);
     }
 }
