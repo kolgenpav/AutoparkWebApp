@@ -1,4 +1,4 @@
-package ua.edu.znu.autoparkweb.conroller;
+package ua.edu.znu.autoparkweb.conroller.listener;
 
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
@@ -14,7 +14,7 @@ import org.thymeleaf.web.servlet.JakartaServletWebApplication;
  * Performs Thymeleaf configuration.
  */
 @WebListener
-public class ThymeleafConfiguration implements ServletContextListener {
+public class ThymeleafConfigurationListener implements ServletContextListener {
     public static final String TEMPLATE_ENGINE_ATR = "ua.edu.znu.autoparkweb.TemplateEngineInstance";
 
     @Override
