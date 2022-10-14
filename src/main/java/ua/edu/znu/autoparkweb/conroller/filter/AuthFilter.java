@@ -40,8 +40,6 @@ public class AuthFilter implements Filter {
                 session.invalidate();
                 resp.sendRedirect(req.getContextPath());
             } else {
-                String message = "Dear " + user.getUsername() + ", Your session Id: " + sessionID;
-                req.setAttribute("message", message);
                 chain.doFilter(req, resp);
             }
         }
