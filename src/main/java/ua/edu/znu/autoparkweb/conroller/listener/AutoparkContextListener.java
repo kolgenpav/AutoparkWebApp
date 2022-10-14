@@ -3,14 +3,13 @@ package ua.edu.znu.autoparkweb.conroller.listener;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
-import ua.edu.znu.autoparkweb.model.Bus;
+import jakarta.servlet.annotation.WebListener;
 import ua.edu.znu.autoparkweb.service.BusDaoImpl;
 import ua.edu.znu.autoparkweb.service.DriverDaoImpl;
 import ua.edu.znu.autoparkweb.service.RouteDaoImpl;
 import ua.edu.znu.autoparkweb.service.UserDaoImpl;
 
-import java.util.List;
-
+@WebListener
 public class AutoparkContextListener implements ServletContextListener {
     private UserDaoImpl userDao;
     private BusDaoImpl busDao;
