@@ -30,7 +30,7 @@ public class DriversServlet extends HttpServlet {
                          HttpServletResponse response) {
         DriverDaoImpl driverDao = (DriverDaoImpl) getServletContext().getAttribute("driverDao");
         List<Driver> drivers = driverDao.findAll();
-        String nextUrl = "routes";
+        String nextUrl = "drivers";
         request.setAttribute("drivers", drivers);
         request.setAttribute("nextUrl", nextUrl);
         response.setContentType("text/html;charset=UTF-8");
