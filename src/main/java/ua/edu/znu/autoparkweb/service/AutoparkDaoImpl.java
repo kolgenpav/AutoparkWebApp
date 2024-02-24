@@ -5,6 +5,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 /**
@@ -31,7 +32,10 @@ public abstract class AutoparkDaoImpl<T> implements AutoparkDao<T> {
 
     public List<T> findAll() {
         EntityManager entityManager = getEntityManager();
-        return entityManager.createQuery("from " + clazz.getName()).getResultList();
+//        return entityManager.createQuery("from " + clazz.getName()).getResultList();
+        CriteriaQuery<T> criteriaQuery = entityManager.getCriteriaBuilder().createQuery(clazz);
+        criteriaQuery.select(criteriaQuery.from(clazz));
+        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
     @Override
