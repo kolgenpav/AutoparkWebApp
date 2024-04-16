@@ -23,13 +23,11 @@ public class AutoparkContextListener implements ServletContextListener {
         busDao = new BusDaoImpl();
         driverDao = new DriverDaoImpl();
         routeDao = new RouteDaoImpl();
-//        List<Bus> buses = busDao.findAll();
         ServletContext app = sce.getServletContext();
         app.setAttribute("userDao", userDao);
         app.setAttribute("busDao", busDao);
         app.setAttribute("driverDao", driverDao);
         app.setAttribute("routeDao", routeDao);
-//        app.setAttribute("buses", buses);
     }
 
     @Override
