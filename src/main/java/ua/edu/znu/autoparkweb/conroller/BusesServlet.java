@@ -42,7 +42,7 @@ public class BusesServlet extends HttpServlet {
             throws IOException {
         String action = request.getParameter("action");
         BusDaoImpl busDao = (BusDaoImpl) getServletContext().getAttribute("busDao");
-        long busId = Long.parseLong(request.getParameter("busId"));
+        Long busId = Long.valueOf(request.getParameter("busId"));
         Bus bus = busDao.findById(busId);
         switch (action) {
             case "busEdit" -> {

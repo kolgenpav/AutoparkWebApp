@@ -42,13 +42,13 @@ public class RoutesServlet extends HttpServlet {
             throws IOException {
         String action = request.getParameter("action");
         RouteDaoImpl routeDao = (RouteDaoImpl) getServletContext().getAttribute("routeDao");
-        long routeId = Long.parseLong(request.getParameter("routeId"));
+        Long routeId = Long.valueOf(request.getParameter("routeId"));
         Route route = routeDao.findById(routeId);
         switch (action) {
             case "routeEdit" -> {
                 String routeName = request.getParameter("routeName");
                 route.setName(routeName);
-                int routeNumber = Integer.parseInt(request.getParameter("routeNumber"));
+                Integer routeNumber = Integer.valueOf(request.getParameter("routeNumber"));
                 route.setNumber(routeNumber);
                 routeDao.update(route);
             }

@@ -39,7 +39,7 @@ public class DriverAddServlet extends HttpServlet {
         driver.setName(driverName);
         String driverSurname = request.getParameter("driverSurname");
         driver.setSurname(driverSurname);
-        int driverAge = Integer.parseInt(request.getParameter("driverAge"));
+        Integer driverAge = Integer.valueOf(request.getParameter("driverAge"));
         driver.setAge(driverAge);
         driverDao.create(driver);
         String nextUrl = "drivers";

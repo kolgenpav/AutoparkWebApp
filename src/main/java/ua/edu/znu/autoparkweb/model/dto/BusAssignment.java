@@ -10,7 +10,7 @@ import lombok.Data;
 public class BusAssignment {
     private Long busId;
     private String busNumber;
-    private int routeNumber;
+    private Integer routeNumber;
     private String routeName;
     private String driversInfo;
 }

@@ -32,7 +32,7 @@ public class Driver {
     @Column(name = "surname", nullable = false, length = 45)
     private String surname;
     @Column(name = "age", nullable = false)
-    private int age;
+    private Integer age;
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @ManyToMany

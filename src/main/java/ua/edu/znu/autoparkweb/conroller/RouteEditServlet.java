@@ -27,7 +27,7 @@ public class RouteEditServlet extends HttpServlet {
                           HttpServletResponse response)
             throws IOException {
         RouteDaoImpl routeDao = (RouteDaoImpl) getServletContext().getAttribute("routeDao");
-        long routeId = Long.parseLong(request.getParameter("routeId"));
+        Long routeId = Long.valueOf(request.getParameter("routeId"));
         Route route = routeDao.findById(routeId);
         String nextUrl = "routeedit";
         request.setAttribute("route", route);

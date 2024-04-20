@@ -26,7 +26,7 @@ public class BusEditServlet extends HttpServlet {
                           HttpServletResponse response)
             throws IOException {
         BusDaoImpl busDao = (BusDaoImpl) getServletContext().getAttribute("busDao");
-        long busId = Long.parseLong(request.getParameter("busId"));
+        Long busId = Long.valueOf(request.getParameter("busId"));
         Bus bus = busDao.findById(busId);
         String nextUrl = "busedit";
         request.setAttribute("bus", bus);

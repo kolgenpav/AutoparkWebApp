@@ -42,7 +42,7 @@ public class DriversServlet extends HttpServlet {
             throws IOException {
         String action = request.getParameter("action");
         DriverDaoImpl driverDao = (DriverDaoImpl) getServletContext().getAttribute("driverDao");
-        long driverId = Long.parseLong(request.getParameter("driverId"));
+        Long driverId = Long.valueOf(request.getParameter("driverId"));
         Driver driver = driverDao.findById(driverId);
         switch (action) {
             case "driverEdit" -> {
@@ -50,7 +50,7 @@ public class DriversServlet extends HttpServlet {
                 driver.setName(driverName);
                 String driverSurname = request.getParameter("driverSurname");
                 driver.setSurname(driverSurname);
-                int driverAge = Integer.parseInt(request.getParameter("driverAge"));
+                Integer driverAge = Integer.valueOf(request.getParameter("driverAge"));
                 driver.setAge(driverAge);
                 driverDao.update(driver);
             }

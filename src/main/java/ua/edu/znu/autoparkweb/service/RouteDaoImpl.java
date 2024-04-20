@@ -16,7 +16,7 @@ public class RouteDaoImpl extends AutoparkDaoImpl<Route> {
         setClazz(Route.class);
     }
 
-    public Route findByNumber(final int number) {
+    public Route findByNumber(final Integer number) {
         EntityManager entityManager = getEntityManager();
         TypedQuery<Route> query = entityManager.createQuery("from Route r where r.number=:number", Route.class)
                 .setParameter("number", number);

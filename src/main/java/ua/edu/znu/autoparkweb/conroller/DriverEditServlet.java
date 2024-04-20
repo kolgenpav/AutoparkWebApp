@@ -27,7 +27,7 @@ public class DriverEditServlet extends HttpServlet {
                           HttpServletResponse response)
             throws IOException {
         DriverDaoImpl driverDao = (DriverDaoImpl) getServletContext().getAttribute("driverDao");
-        long driverId = Long.parseLong(request.getParameter("driverId"));
+        Long driverId = Long.valueOf(request.getParameter("driverId"));
         Driver driver = driverDao.findById(driverId);
         String nextUrl = "driveredit";
         request.setAttribute("driver", driver);

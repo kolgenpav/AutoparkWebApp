@@ -45,7 +45,7 @@ public class Route {
     @Column(name = "name", nullable = false, unique = true, length = 150)
     private String name;
     @Column(name = "number", nullable = false, unique = true)
-    private int number;
+    private Integer number;
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "route", cascade = CascadeType.PERSIST)

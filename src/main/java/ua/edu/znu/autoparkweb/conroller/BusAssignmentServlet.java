@@ -35,8 +35,8 @@ public class BusAssignmentServlet extends HttpServlet {
          * from BusAddServlet*/
         String action = request.getParameter("action") == null
                 ? (String) request.getAttribute("action") : request.getParameter("action");
-        long busId = request.getParameter("busId") == null
-                ? (long) request.getAttribute("busId") : Long.parseLong(request.getParameter("busId"));
+        Long busId = request.getParameter("busId") == null
+                ? (Long) request.getAttribute("busId") : Long.valueOf(request.getParameter("busId"));
         BusDaoImpl busDao = (BusDaoImpl) getServletContext().getAttribute("busDao");
         RouteDaoImpl routeDao = (RouteDaoImpl) getServletContext().getAttribute("routeDao");
         DriverDaoImpl driverDao = (DriverDaoImpl) getServletContext().getAttribute("driverDao");
@@ -46,13 +46,13 @@ public class BusAssignmentServlet extends HttpServlet {
             case "busSelect" -> {
             }
             case "routeAssign" -> {
-                long routeId = Long.parseLong(request.getParameter("selectedRoute"));
+                Long routeId = Long.valueOf(request.getParameter("selectedRoute"));
                 Route busRoute = routeDao.findById(routeId);
                 bus.setRoute(busRoute);
                 busDao.update(bus);
             }
             case "driverAssign" -> {
-                long driverId = Long.parseLong(request.getParameter("selectedDriver"));
+                Long driverId = Long.valueOf(request.getParameter("selectedDriver"));
                 Driver driver = driverDao.findById(driverId);
                 driver.getBuses().add(bus);
                 driverDao.update(driver);
