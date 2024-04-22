@@ -23,54 +23,41 @@ import java.io.IOException;
 @WebServlet("/RegistrationServlet")
 public class RegistrationServlet extends HttpServlet {
 
-    private TemplateEngine templateEngine;
-
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        this.templateEngine = (TemplateEngine) getServletContext()
-                .getAttribute(ThymeleafConfigurationListener.TEMPLATE_ENGINE_ATR);
     }
 
     @Override
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response)
             throws IOException {
-        WebContext context = getWebContext(request, response);
-        templateEngine.process("registration", context, response.getWriter());
-        response.setContentType("text/html;charset=UTF-8");
+        String nextUrl = "registration";
+        request.setAttribute("nextUrl", nextUrl);
     }
 
     @Override
     protected void doPost(HttpServletRequest request,
                           HttpServletResponse response)
             throws IOException {
-        WebContext context = getWebContext(request, response);
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String message = "";
+        String nextUrl = "login";
         UserDaoImpl userDao = new UserDaoImpl();
-        try {
-            User foundedUser = userDao.findByUsername(username);
-            context.setVariable("message", "User with " + username + " already registered!");
-            context.setVariable("servlet", "RegistrationServlet");
-            context.setVariable("linkText", "Registration");
-        } catch (NoResultException ex) {
+
+        User foundedUser = userDao.findByUsername(username);
+        if (foundedUser != null) {
+            message = "User with " + username + " already registered!";
+        } else {
             User newUser = new User();
             newUser.setUsername(username);
             newUser.setPassword(password);
             userDao.create(newUser);
-            context.setVariable("message", "User " + username + " registered");
-            context.setVariable("servlet", "index.html");
-            context.setVariable("linkText", "Index");
+            message = "User " + username + " just registered!";
         }
-        templateEngine.process("home", context, response.getWriter());
-        response.setContentType("text/html;charset=UTF-8");
-    }
-
-    private WebContext getWebContext(HttpServletRequest request, HttpServletResponse response) {
-        IWebExchange webExchange = JakartaServletWebApplication.buildApplication(getServletContext())
-                .buildExchange(request, response);
-        return new WebContext(webExchange);
+        request.setAttribute("nextUrl", nextUrl);
+        request.setAttribute("message", message);
     }
 
     @Override

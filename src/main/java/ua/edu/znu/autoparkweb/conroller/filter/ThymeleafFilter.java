@@ -23,7 +23,8 @@ import java.util.Enumeration;
 @WebFilter(urlPatterns = {"/LoginServlet", "/HomeServlet", "/BusAssignmentServlet",
         "/BusesServlet", "/BusAddServlet", "/BusEditServlet",
         "/RoutesServlet", "/RouteAddServlet", "/RouteEditServlet",
-        "/DriversServlet", "/DriverAddServlet", "/DriverEditServlet"},
+        "/DriversServlet", "/DriverAddServlet", "/DriverEditServlet",
+        "/RegistrationServlet"},
         dispatcherTypes = {DispatcherType.FORWARD, DispatcherType.REQUEST})
 public class ThymeleafFilter implements Filter {
 

@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Registration</title>
-    <link rel="stylesheet" type="text/css" media="all" href="../../css/style.css" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" type="text/css" media="all" href="../../css/style.css" th:href="@{/css/style.css}"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
@@ -11,10 +11,14 @@
 <body>
 <section id="autopark">
     <div class="container">
-        <div th:insert="fragments/header :: header"></div>
+        <header class="login">
+            <img src="images/bus-logo.png" alt="logo" width="100" height="100">
+            <h1 style="margin-left: 100px;">Autopark</h1>
+        </header>
         <div class="content">
             <div class="companyname">
-                <img src="../../images/userregistration.jpg" th:src="@{/images/userregistration.jpg}" alt="New user registration" width="600" height="350">
+                <img src="../../images/userregistration.png" th:src="@{/images/userregistration.png}"
+                     alt="New user registration" width="300" height="300">
             </div>
             <div class="loginform">
                 <form action="RegistrationServlet" method="post">
@@ -23,7 +27,7 @@
                     <p><input type="submit" value="Register" style="float: right"/></p>
                 </form>
                 <br/>
-                <a href="login.html" th:href="@{/login.html}">Login</a>
+                <a href="login.html" th:href="@{/LoginServlet}">Login</a>
             </div>
         </div>
         <div th:insert="fragments/footer :: footer"></div>

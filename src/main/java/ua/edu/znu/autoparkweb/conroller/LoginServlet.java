@@ -29,7 +29,9 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request,
                          HttpServletResponse response)
             throws IOException {
-        doPost(request, response);
+        String nextUrl = "login";
+        request.setAttribute("nextUrl", nextUrl);
+//        doPost(request, response);
     }
 
     @Override

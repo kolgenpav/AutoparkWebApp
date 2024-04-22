@@ -21,8 +21,12 @@ header.login {
   justify-content: flex-start;
 }
 
-.loginmessage {
+.message {
   color: red;
+}
+
+.align-right {
+  text-align: right
 }
 
 header ul {
